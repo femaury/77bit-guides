@@ -226,49 +226,6 @@
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
-/* Print styles for better printing experience */
-@media print {
-  body {
-    background-color: white !important;
-    color: black !important;
-  }
-  
-  .guide-article {
-    color: black !important;
-    background-color: white !important;
-    border: none !important;
-    padding: 0 !important;
-  }
-  
-  header, footer, nav, .breadcrumb, button {
-    display: none !important;
-  }
-  
-  a {
-    color: #000 !important;
-    text-decoration: underline !important;
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    color: #000 !important;
-    break-after: avoid !important;
-  }
-  
-  img {
-    max-width: 100% !important;
-    break-inside: avoid !important;
-  }
-  
-  pre, blockquote, table {
-    break-inside: avoid !important;
-  }
-  
-  p, h2, h3 {
-    orphans: 3 !important;
-    widows: 3 !important;
-  }
-}
-
 /* Dark theme scrollbar for better UX */
 ::-webkit-scrollbar {
   width: 10px;
