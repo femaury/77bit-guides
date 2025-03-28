@@ -187,7 +187,7 @@ Each time you upgrade the weapon's level, each of these stats (if present on the
 
 > 💡
 > 
-> When a weapon has the Weapon Damage stat (so its base damage is doubled), **the increase of damage per level for each upgrade is also doubled** since both the base damage and the stat increase**!** 
+> When a weapon has the Weapon Damage stat (so its base damage is doubled), **the increase of damage per level for each upgrade is also doubled** since both the base damage and the stat increase!
 > 
 > This means that a Preem weapon with 82 base damage (instead of 41), will get +6 dmg per level at Tier 0, +18 dmg at Tier +1, +36 dmg at Tier +2, etc…
 > 
