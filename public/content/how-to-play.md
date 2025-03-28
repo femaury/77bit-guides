@@ -1,8 +1,5 @@
 # How to play
 
-Created: March 16, 2025 10:01 AM
-Status: Published
-
 77-Bit is a browser based MMORPG. This means no download is required to play the game, you simply need a device which has access to internet and a mouse and keyboard.
 
 The game can also be accessed through BitHub from the play button top left.
@@ -21,12 +18,10 @@ If you weren’t already connected to BitHub, you’ll need to login. You can us
 
 ![Screenshot 2025-03-16 at 10.15.27.png](/content/how-to-play/Screenshot_2025-03-16_at_10.15.27.png)
 
-<aside>
-💡
 
-To access other login methods, click the “OTHER LOGIN METHODS” below the abstract login button.
-
-</aside>
+> 💡
+> 
+> To access other login methods, click the “OTHER LOGIN METHODS” below the abstract login button.
 
 ## Queue
 
@@ -53,14 +48,11 @@ Each 77-Bit NFT has its own unique skin which you can equip if you own the NFT i
 
 If you don’t own a 77-Bit NFT, you will have the default Anon skin.
 
-<aside>
-💡
-
-For 77-Bit’s Beta, since the new NFT art is not yet revealed, only 6 base NFT skins are available, depending on the Type trait of the NFT(s) you own.
-
-1 Guy / 1 Girl / 1 Ape / 1 Punk / 2 Cyborgs
-
-</aside>
+> 💡
+> 
+> For 77-Bit’s Beta, since the new NFT art is not yet revealed, only 6 base NFT skins are available, depending on the Type trait of the NFT(s) you own.
+> 
+> 1 Guy / 1 Girl / 1 Ape / 1 Punk / 2 Cyborgs
 
 ### Other tabs
 

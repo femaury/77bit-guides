@@ -1,32 +1,22 @@
 # Choosing a Class
 
-Created: March 16, 2025 12:22 PM
-Status: Published
-
 Congrats, you completed the tutorial. After having quickly tried each of the three classes and put to use their respective special abilities, here comes your first decision in 77-Bit.
 
 Which class will you pick?
 
-<aside>
-⚠️
+> ⚠️
+> 
+> You cannot change classes later in the game. This decision is final.
 
-You cannot change classes later in the game. This decision is final.
 
-</aside>
+> 💡
+> 
+> Note that **each class can play the game solo** and deal enough damage to progress through the whole experience. If you play in a group, make sure to synergise your class and skill decisions with your teammates!
 
-<aside>
-💡
+> 💡
+> 
+> Also note that **each class can use every weapon**, melee or ranged, without penalty. Skills are tied to your character and not your weapon.
 
-Note that **each class can play the game solo** and deal enough damage to progress through the whole experience. If you play in a group, make sure to synergise your class and skill decisions with your teammates!
-
-</aside>
-
-<aside>
-💡
-
-Also note that **each class can use every weapon**, melee or ranged, without penalty. Skills are tied to your character and not your weapon.
-
-</aside>
 
 ![select_hacker.png](/content/choosing-a-class/db1f7c8c-2bc8-47fe-b275-c8cb414682c7.png)
 
@@ -107,7 +97,6 @@ The technomancer class has a mix of ranged damage and healing skills. Their role
 
 The technomancer class’ secondary resource is “Bitstream”. Bitstream is slowly gained passively whether in combat or not and spent with each skill use.
 
----
 
 # Skill Builder
 

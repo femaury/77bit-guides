@@ -1,17 +1,11 @@
 # Completing the In-Game Tutorial
 
-Created: March 16, 2025 10:02 AM
-Status: Published
-
 When you first log into the game, you will spawn inside a train. This train is taking you to the OPSEC Headquarters to start your training, so buckle up.
 
-<aside>
-💡
+> 💡
+> 
+> **TAKE THE TIME TO READ THE DIALOGUES. THEY EXPLAIN HOW TO PLAY THE GAME.**
 
-**TAKE THE TIME TO READ THE DIALOGUES. 
-THEY EXPLAIN HOW TO PLAY THE GAME.**
-
-</aside>
 
 ## Movement
 
@@ -33,12 +27,9 @@ Further ahead you will see an NPC named Shadow Broker with a ❕ mark. This mea
 
 Yellow dialogue options make the quest progress, while white dialogue options give you more info and context. Read the white options first if you wish to, then click on the yellow option to continue.
 
-<aside>
-💡
-
-You can always open your quest log by pressing `?`
-
-</aside>
+> 💡
+> 
+> You can always open your quest log by pressing `?`
 
 ![first_quest.png](/content/tutorial/first_quest.png)
 
@@ -74,23 +65,17 @@ Once inside the headquarters, walk up. You will need to open a larger door, simp
 
 Keep walking to the next door, which is temporarily locked (displayed by the ⏳ sign) while a voice talks. Once the voice is done talking, you can open the door and fight your first real enemies.
 
-<aside>
-💡
-
-Don’t forget to loot the pixels that drop from the monsters you kill. Simply walk over them to pick them up.
-
-</aside>
+> 💡
+> 
+> Don’t forget to loot the pixels that drop from the monsters you kill. Simply walk over them to pick them up.
 
 ## Sentinel Special Skill
 
 Once you killed and looted the enemies, keep going. You’ll find Vigilix again waiting for you, so talk to him. Once you get the next step, go through the door behind him. **Do not go to the group of mobs on the right**. Kill the mob behind the door (careful he has a spin attack when you are too close).
 
-<aside>
-💡
-
-Always look to your minimap for directions. Quest objectives are clearly displayed on it.
-
-</aside>
+> 💡
+> 
+> Always look to your minimap for directions. Quest objectives are clearly displayed on it.
 
 Once you’ve killed the mob you can go over the floating chest, which will change your class from hacker to sentinel (you need to do this, don’t worry you’ll choose a class after the tutorial).
 
