@@ -80,3 +80,88 @@
     @apply text-xs text-gray-400 bg-black/30 px-2 py-0.5 rounded;
   }
 }
+
+/* Notion Content Styling */
+.notion-content h1 {
+  @apply text-3xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-hover drop-shadow-[0_2px_4px_rgba(252,213,73,0.2)];
+}
+
+.notion-content h2 {
+  @apply text-2xl font-bold mt-10 mb-4 text-yellow-500/90 drop-shadow;
+}
+
+.notion-content h3 {
+  @apply text-xl font-bold mt-8 mb-3 text-yellow-500/80;
+}
+
+.notion-content p {
+  @apply mb-4 text-gray-200/90 leading-relaxed;
+}
+
+.notion-content ul, .notion-content ol {
+  @apply my-4 ml-6 text-gray-200/90;
+}
+
+.notion-content ul {
+  @apply list-disc;
+}
+
+.notion-content ol {
+  @apply list-decimal;
+}
+
+.notion-content li {
+  @apply mb-2;
+}
+
+.notion-content blockquote {
+  @apply border-l-4 border-primary/40 pl-4 italic text-gray-400;
+}
+
+.notion-content a {
+  @apply text-primary hover:text-primary-hover underline;
+}
+
+.notion-content strong {
+  @apply font-bold text-primary/90;
+}
+
+.notion-content table {
+  @apply min-w-full border border-[rgba(252,213,73,0.2)] rounded-lg my-6;
+}
+
+.notion-content thead {
+  @apply bg-[rgba(252,213,73,0.1)];
+}
+
+.notion-content tbody {
+  @apply divide-y divide-[rgba(252,213,73,0.1)];
+}
+
+.notion-content tr {
+  @apply hover:bg-[rgba(255,255,255,0.03)];
+}
+
+.notion-content th {
+  @apply px-4 py-3 text-left text-sm font-medium text-yellow-500/90;
+}
+
+.notion-content td {
+  @apply px-4 py-3 text-sm text-gray-200/90;
+}
+
+.notion-content img {
+  @apply max-w-full h-auto rounded-lg my-6;
+}
+
+.notion-content code {
+  @apply bg-black/30 px-1.5 py-0.5 rounded text-primary/90 font-mono text-sm;
+}
+
+.notion-content pre {
+  @apply bg-black/40 p-4 rounded-md overflow-x-auto font-mono text-sm my-4;
+}
+
+.notion-content hr {
+  @apply my-8 border-t border-[rgba(252,213,73,0.1)];
+}

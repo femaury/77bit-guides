@@ -1,16 +1,30 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import { cn } from '../lib/utils';
+import remarkGfm from 'remark-gfm';
 
 interface MarkdownContentProps {
   content: string;
   className?: string;
+  baseImagePath?: string;
 }
 
-export function MarkdownContent({ content, className }: MarkdownContentProps) {
+export function MarkdownContent({ content, className, baseImagePath = '' }: MarkdownContentProps) {
+  // Handle Notion's image paths if needed
+  const processedContent = baseImagePath 
+    ? content.replace(/!\[(.*?)\]\((.*?)\)/g, (match, alt, path) => {
+        // If path is already absolute or external, don't modify it
+        if (path.startsWith('http') || path.startsWith('/')) {
+          return match;
+        }
+        return `![${alt}](${baseImagePath}/${path})`;
+      })
+    : content;
+
   return (
     <div className={cn('prose prose-invert prose-yellow max-w-none', className)}>
       <ReactMarkdown
+        remarkPlugins={[remarkGfm]} // Add GitHub Flavored Markdown support for tables
         components={{
           h1: ({ children }) => (
             <h1 className="text-3xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-hover drop-shadow-[0_2px_4px_rgba(252,213,73,0.2)]">
@@ -110,9 +124,21 @@ export function MarkdownContent({ content, className }: MarkdownContentProps) {
           hr: () => (
             <hr className="my-8 border-t border-[rgba(252,213,73,0.1)]" />
           ),
+          img: ({ src, alt }) => (
+            <img 
+              src={src} 
+              alt={alt || ''} 
+              className="rounded-lg my-6 max-w-full h-auto border border-[rgba(252,213,73,0.2)]" 
+            />
+          ),
+          aside: ({ children }) => (
+            <div className="bg-[rgba(252,213,73,0.05)] border border-[rgba(252,213,73,0.2)] rounded-lg p-4 my-6">
+              {children}
+            </div>
+          ),
         }}
       >
-        {content}
+        {processedContent}
       </ReactMarkdown>
     </div>
   );

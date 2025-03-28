@@ -7,7 +7,7 @@ A community-driven guides repository for the 77-bit game. This application serve
 - 📚 Comprehensive game guides for 77-bit
 - 📱 Responsive design for all devices
 - 🎨 Beautiful UI based on the 77-bit game style
-- 📝 Markdown support for rich content formatting
+- 📝 Markdown content directly from Notion
 - 🔍 SEO-optimized for better discoverability
 
 ## Tech Stack
@@ -16,7 +16,7 @@ A community-driven guides repository for the 77-bit game. This application serve
 - **Styling**: TailwindCSS
 - **Components**: Radix UI
 - **Routing**: React Router
-- **Content**: Markdown with react-markdown
+- **Content**: Markdown exported from Notion
 - **Deployment**: Ready for Vercel, Netlify, or similar platforms
 
 ## Getting Started
@@ -47,12 +47,25 @@ A community-driven guides repository for the 77-bit game. This application serve
 
 ## Adding Guides
 
-For the initial version, guides are stored as hardcoded data in `src/data/guides.ts`. To add a new guide:
+Guides are stored as Markdown files in the `public/content/` directory. You can easily export these files from Notion.
 
-1. Add a new entry to the `guides` array in `src/data/guides.ts`
-2. Make sure to include all required fields (id, title, description, image, slug, category, content)
-3. Write the guide content in Markdown format
-4. Add a corresponding image in `public/images/`
+### Using the Helper Script
+
+We provide a helper script to add new guides:
+
+```bash
+node scripts/add-guide.js --title "Your Guide Title" --description "A short description" --category "beginner" --content-file "./path-to-file.md" --assets-folder "./path-to-assets-folder"
+```
+
+### Manual Process
+
+1. Export content from Notion as Markdown
+2. Save the file in `public/content/`
+3. If your guide has images, add the assets folder to `public/content/`
+4. Add a new entry to the `guides` array in `src/data/guides.ts`
+5. Add a corresponding image in `public/images/`
+
+For detailed instructions, see [Guide Content Management](./docs/GUIDE_MANAGEMENT.md).
 
 ## Deployment
 
@@ -68,7 +81,6 @@ npm run preview
 
 ## Future Improvements
 
-- Add a proper CMS for easier content management
 - Implement search functionality
 - Add social sharing features
 - Develop user-contributed guides
