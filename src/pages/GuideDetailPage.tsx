@@ -5,7 +5,7 @@ import { MarkdownContent } from '../components/MarkdownContent';
 import { Button } from '../components/ui/Button';
 import { SEO } from '../components/SEO';
 import { TableOfContents } from '../components/TableOfContents';
-import { GuideFeedback } from '../components/GuideFeedback';
+// import { GuideFeedback } from '../components/GuideFeedback';
 import { calculateReadingTime } from '../lib/utils';
 
 export function GuideDetailPage() {
@@ -200,10 +200,10 @@ export function GuideDetailPage() {
                     content={content} 
                     baseImagePath={guide.assetBasePath}
                   />
-                  <GuideFeedback 
+                  {/* <GuideFeedback 
                     guideTitle={guide.title}
                     className="mt-12" 
-                  />
+                  /> */}
                 </>
               )}
             </article>
