@@ -27,17 +27,17 @@ export function MarkdownContent({ content, className, baseImagePath = '' }: Mark
         components={{
           // First level headers are handled by our page layout, so we style this as a slightly smaller header
           h1: ({ children }) => (
-            <h1 className="text-2xl font-bold mb-6 mt-2 text-yellow-500/90 border-b border-border-primary pb-4">
+            <h1 className="text-2xl font-bold mb-6 mt-2 text-primary border-b border-border-primary pb-4">
               {children}
             </h1>
           ),
           h2: ({ children }) => (
-            <h2 className="text-xl font-bold mt-10 mb-4 text-yellow-500/90 drop-shadow">
+            <h2 className="text-xl font-bold mt-10 mb-4 text-primary drop-shadow">
               {children}
             </h2>
           ),
           h3: ({ children }) => (
-            <h3 className="text-lg font-bold mt-8 mb-3 text-yellow-500/80">
+            <h3 className="text-lg font-bold mt-8 mb-3 text-primary/90">
               {children}
             </h3>
           ),
@@ -78,33 +78,33 @@ export function MarkdownContent({ content, className, baseImagePath = '' }: Mark
           ),
           table: ({ children }) => (
             <div className="overflow-x-auto my-6">
-              <table className="min-w-full border border-[rgba(252,213,73,0.2)] rounded-lg">
+              <table>
                 {children}
               </table>
             </div>
           ),
           thead: ({ children }) => (
-            <thead className="bg-[rgba(252,213,73,0.1)]">
+            <thead>
               {children}
             </thead>
           ),
           tbody: ({ children }) => (
-            <tbody className="divide-y divide-[rgba(252,213,73,0.1)]">
+            <tbody>
               {children}
             </tbody>
           ),
           tr: ({ children }) => (
-            <tr className="hover:bg-[rgba(255,255,255,0.03)]">
+            <tr>
               {children}
             </tr>
           ),
           th: ({ children }) => (
-            <th className="px-4 py-3 text-left text-sm font-medium text-yellow-500/90">
+            <th className="text-primary">
               {children}
             </th>
           ),
           td: ({ children }) => (
-            <td className="px-4 py-3 text-sm text-gray-200/90">
+            <td className="text-gray-200/90">
               {children}
             </td>
           ),
@@ -131,7 +131,14 @@ export function MarkdownContent({ content, className, baseImagePath = '' }: Mark
                 alt={alt || ''} 
                 className="rounded-lg max-w-full h-auto border border-[rgba(252,213,73,0.2)] shadow-md" 
               />
-              {alt && alt !== 'image.png' && (
+              {/* Only show caption if it's not a filename and not empty */}
+              {alt && 
+                !alt.includes('.png') && 
+                !alt.includes('.jpg') && 
+                !alt.includes('.jpeg') && 
+                !alt.includes('.gif') && 
+                alt !== 'image' && 
+                alt !== 'image.png' && (
                 <p className="text-sm text-center text-gray-400 mt-2">{alt}</p>
               )}
             </div>

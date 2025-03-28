@@ -65,7 +65,7 @@
   }
 
   .header-primary {
-    @apply text-xl font-bold mb-4 text-yellow-500/90 drop-shadow;
+    @apply text-xl font-bold mb-4 text-primary drop-shadow;
   }
 
   .header-gradient {
@@ -87,11 +87,11 @@
 }
 
 .notion-content h2 {
-  @apply text-2xl font-bold mt-10 mb-4 text-yellow-500/90 drop-shadow;
+  @apply text-2xl font-bold mt-10 mb-4 text-primary drop-shadow;
 }
 
 .notion-content h3 {
-  @apply text-xl font-bold mt-8 mb-3 text-yellow-500/80;
+  @apply text-xl font-bold mt-8 mb-3 text-primary;
 }
 
 .notion-content p {
@@ -143,7 +143,7 @@
 }
 
 .notion-content th {
-  @apply px-4 py-3 text-left text-sm font-medium text-yellow-500/90;
+  @apply px-4 py-3 text-left text-sm font-medium text-primary;
 }
 
 .notion-content td {
@@ -224,6 +224,39 @@
   border-radius: 0.5rem;
   overflow: hidden;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(252, 213, 73, 0.15);
+  font-size: 0.9rem;
+}
+
+.guide-article thead {
+  background-color: rgba(252, 213, 73, 0.08);
+}
+
+.guide-article th {
+  font-weight: 600;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(252, 213, 73, 0.2);
+  border-right: 1px solid rgba(252, 213, 73, 0.1);
+  color: var(--color-primary);
+  font-size: 0.9rem;
+}
+
+.guide-article td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(252, 213, 73, 0.1);
+  border-right: 1px solid rgba(252, 213, 73, 0.1);
+  color: rgba(229, 231, 235, 0.9);
+  font-size: 0.9rem;
+}
+
+.guide-article th:last-child,
+.guide-article td:last-child {
+  border-right: none;
+}
+
+.guide-article tr:last-child td {
+  border-bottom: none;
 }
 
 /* Dark theme scrollbar for better UX */
@@ -245,14 +278,12 @@
   background: rgba(252, 213, 73, 0.5);
 }
 
-/* Smooth reading transitions */
-.guide-article p,
-.guide-article li {
+/* Only add hover effect to table rows, not paragraphs or list items */
+.guide-article tr {
   transition: background-color 0.2s;
 }
 
-.guide-article p:hover,
-.guide-article li:hover {
+.guide-article tr:hover {
   background-color: rgba(255, 255, 255, 0.03);
 }
 
