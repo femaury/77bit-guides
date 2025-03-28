@@ -1,9 +1,3 @@
-# All About Weapons
-
-Here is your one-stop guide to know all you need to know about weapons in 77-Bit. From what types of weapon there are, what their stats are, where to acquire them, how to use them and how to upgrade them.
-
-Let's get into it!
-
 # Weapon Info
 
 Let's breakdown all the information related to the weapon item themselves.
