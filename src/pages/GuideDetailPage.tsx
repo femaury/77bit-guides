@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { getGuideBySlug } from '../data/guides';
+import { getGuideBySlug, Guide, getRelatedGuidesByIds } from '../data/guides';
 import { MarkdownContent } from '../components/MarkdownContent';
 import { Button } from '../components/ui/Button';
 import { SEO } from '../components/SEO';
@@ -18,6 +18,7 @@ export function GuideDetailPage() {
   const articleRef = useRef<HTMLElement>(null);
   const [showTableOfContents, setShowTableOfContents] = useState<boolean>(false);
   const [readingTime, setReadingTime] = useState<number>(0);
+  const [relatedGuides, setRelatedGuides] = useState<Guide[]>([]);
 
   useEffect(() => {
     async function fetchContent() {
@@ -44,6 +45,14 @@ export function GuideDetailPage() {
     }
 
     fetchContent();
+    
+    // Get related guides defined in the guide data
+    if (guide && guide.related) {
+      const related = getRelatedGuidesByIds(guide.related);
+      setRelatedGuides(related);
+    } else {
+      setRelatedGuides([]);
+    }
   }, [guide]);
 
   // Check if we should show the table of contents (after content loads)
@@ -209,22 +218,21 @@ export function GuideDetailPage() {
             </article>
             
             {/* Related guides section */}
-            {!loading && !error && (
+            {!loading && !error && relatedGuides.length > 0 && (
               <div className="mt-12 pt-8 border-t border-border-primary">
                 <h3 className="text-lg font-semibold text-gray-300 mb-6">You might also like</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div className="bg-bg-elevated/30 border border-border-primary rounded-lg p-4 hover:bg-bg-elevated/50 transition-colors">
-                    <Link to="/" className="block">
-                      <h4 className="font-medium text-primary-hover mb-2">Getting Started with 77-Bit</h4>
-                      <p className="text-sm text-gray-400">Learn the basics of the game and get started on your journey</p>
-                    </Link>
-                  </div>
-                  <div className="bg-bg-elevated/30 border border-border-primary rounded-lg p-4 hover:bg-bg-elevated/50 transition-colors">
-                    <Link to="/" className="block">
-                      <h4 className="font-medium text-primary-hover mb-2">Advanced Tactics Guide</h4>
-                      <p className="text-sm text-gray-400">Master the most advanced techniques used by pro players</p>
-                    </Link>
-                  </div>
+                  {relatedGuides.map(relatedGuide => (
+                    <div 
+                      key={relatedGuide.id}
+                      className="bg-bg-elevated/30 border border-border-primary rounded-lg p-4 hover:bg-bg-elevated/50 transition-colors"
+                    >
+                      <Link to={`/guides/${relatedGuide.slug}`} className="block">
+                        <h4 className="font-medium text-primary-hover mb-2">{relatedGuide.title}</h4>
+                        <p className="text-sm text-gray-400">{relatedGuide.description}</p>
+                      </Link>
+                    </div>
+                  ))}
                 </div>
                 
                 <div className="flex justify-center mt-8">
