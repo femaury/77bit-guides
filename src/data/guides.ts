@@ -5,6 +5,7 @@ export interface Guide {
   image: string;
   slug: string;
   contentPath: string;
+  lastUpdated?: Date;
   assetBasePath?: string;
 }
 
@@ -16,6 +17,7 @@ export const guides: Guide[] = [
     image: '/images/weapons.png',
     slug: 'all-about-weapons',
     contentPath: '/content/all-about-weapons.md',
+    lastUpdated: new Date(2025, 2, 28), // March 28, 2025
     assetBasePath: '/content/all-about-weapons'
   },
 ];

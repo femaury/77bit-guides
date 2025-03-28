@@ -26,6 +26,8 @@ We provide a helper script to add new guides to the application:
 node scripts/add-guide.js --title "Your Guide Title" --description "A short description" --content-file "./path-to-file.md" --assets-folder "./path-to-assets-folder"
 ```
 
+This will automatically set the guide's creation date to the current time. When you later update a guide, you can manually update the `lastUpdated` field in the guide's entry in `src/data/guides.ts`.
+
 ### Manual Process (Alternative)
 
 If you prefer to add guides manually:
@@ -33,7 +35,10 @@ If you prefer to add guides manually:
 1. Export the Markdown content from Notion as described above
 2. Save the file in the `public/content/` directory with a slug-friendly name (e.g., `your-guide-title.md`)
 3. If you have an assets folder, copy it to `public/content/` as well
-4. Add a new entry to the `guides` array in `src/data/guides.ts` with the appropriate metadata, including the `assetBasePath` if needed
+4. Add a new entry to the `guides` array in `src/data/guides.ts` with the appropriate metadata, including:
+   - `lastUpdated`: A JavaScript Date object representing when the guide was last modified
+   - `assetBasePath`: Path to the assets folder if needed
+
 5. Add a suitable image for the guide in `public/images/`
 
 ## Why Markdown?

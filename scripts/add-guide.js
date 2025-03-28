@@ -117,11 +117,12 @@ async function addGuide() {
     description: '${options.description.replace(/'/g, "\\'")}',
     image: '/images/guide-default.jpg', // Replace with actual image path later
     slug: '${slug}',
-    contentPath: '/content/${slug}.md'`;
+    contentPath: '/content/${slug}.md',
+    lastUpdated: new Date(),`;
     
     // Add assetBasePath if provided
     if (assetsBasePath) {
-      newGuideEntry += `,
+      newGuideEntry += `
     assetBasePath: '${assetsBasePath}'`;
     }
     
