@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navbar } from './Navbar';
-// import { Footer } from './Footer';
+import { Footer } from './Footer';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -13,7 +13,7 @@ export function Layout({ children }: LayoutProps) {
       <main className="flex-grow container mx-auto px-4 py-8">
         {children}
       </main>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 } 
