@@ -225,7 +225,7 @@
   overflow: hidden;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   border: 1px solid rgba(252, 213, 73, 0.15);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .guide-article thead {
@@ -235,19 +235,19 @@
 .guide-article th {
   font-weight: 600;
   text-align: left;
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 0.75rem;
   border-bottom: 1px solid rgba(252, 213, 73, 0.2);
   border-right: 1px solid rgba(252, 213, 73, 0.1);
   color: var(--color-primary);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .guide-article td {
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 0.75rem;
   border-bottom: 1px solid rgba(252, 213, 73, 0.1);
   border-right: 1px solid rgba(252, 213, 73, 0.1);
   color: rgba(229, 231, 235, 0.9);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .guide-article th:last-child,

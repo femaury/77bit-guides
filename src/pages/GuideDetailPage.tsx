@@ -84,7 +84,7 @@ export function GuideDetailPage() {
         url={`/guides/${guide.slug}`}
       />
       
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto lg:px-4">
         {/* Breadcrumb navigation */}
         <div className="mb-6 flex items-center text-sm text-gray-400">
           <Link to="/" className="hover:text-primary transition-colors">
@@ -94,7 +94,7 @@ export function GuideDetailPage() {
           <span className="text-gray-300">{guide.title}</span>
         </div>
         
-        {/* Guide header section */}
+        {/* Guide header section - constrained to match content width */}
         <header className="mb-12">
           {guide.image && (
             <div className="relative mb-8 rounded-xl overflow-hidden">
@@ -114,7 +114,7 @@ export function GuideDetailPage() {
           
           <div className="flex flex-col md:flex-row justify-between items-start gap-6">
             <div className="max-w-2xl">
-              <p className="text-lg text-gray-300 leading-relaxed">{guide.description}</p>
+              <p className="text-sm md:text-base text-gray-300 leading-relaxed">{guide.description}</p>
               
               <div className="mt-4 flex items-center text-sm text-gray-400">
                 <div className="flex items-center mr-4">
@@ -148,7 +148,7 @@ export function GuideDetailPage() {
         </header>
 
         {/* Two column layout with ToC and content */}
-        <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex flex-col lg:flex-row gap-8 justify-between">
           {/* Table of Contents sidebar - hidden on mobile, shown as sticky on desktop */}
           {showTableOfContents && (
             <aside className="hidden lg:block w-64 shrink-0">
@@ -162,7 +162,7 @@ export function GuideDetailPage() {
           )}
           
           {/* Article content */}
-          <div className="flex-1">
+          <div className="flex-1 lg:mx-0 min-w-0">
             {/* Mobile ToC (dropdown style) */}
             {showTableOfContents && (
               <div className="lg:hidden mb-6">
@@ -178,7 +178,7 @@ export function GuideDetailPage() {
             )}
             
             {/* Guide content section */}
-            <article ref={articleRef} className="guide-article bg-bg-elevated/30 border border-border-primary rounded-lg p-8">
+            <article ref={articleRef} className="guide-article bg-bg-elevated/30 border border-border-primary rounded-lg p-4 sm:p-6 md:p-8">
               {loading ? (
                 <div className="animate-pulse">
                   <div className="h-6 bg-bg-elevated/50 rounded w-3/4 mb-4"></div>
