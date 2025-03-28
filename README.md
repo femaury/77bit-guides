@@ -54,7 +54,7 @@ Guides are stored as Markdown files in the `public/content/` directory. You can 
 We provide a helper script to add new guides:
 
 ```bash
-node scripts/add-guide.js --title "Your Guide Title" --description "A short description" --category "beginner" --content-file "./path-to-file.md" --assets-folder "./path-to-assets-folder"
+node scripts/add-guide.js --title "Your Guide Title" --description "A short description" --content-file "./path-to-file.md" --assets-folder "./path-to-assets-folder"
 ```
 
 ### Manual Process

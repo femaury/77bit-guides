@@ -23,15 +23,8 @@ The guide content is stored as Markdown files in the `public/content/` directory
 We provide a helper script to add new guides to the application:
 
 ```bash
-node scripts/add-guide.js --title "Your Guide Title" --description "A short description" --category "beginner" --content-file "./path-to-file.md" --assets-folder "./path-to-assets-folder"
+node scripts/add-guide.js --title "Your Guide Title" --description "A short description" --content-file "./path-to-file.md" --assets-folder "./path-to-assets-folder"
 ```
-
-Valid categories are:
-- beginner
-- intermediate 
-- advanced
-- mechanics
-- quests
 
 ### Manual Process (Alternative)
 

@@ -4,7 +4,7 @@
  * This script helps you add a new guide to the 77bit-guides app.
  * 
  * Usage:
- * node scripts/add-guide.js --title "Guide Title" --description "Guide description" --category "beginner" --content-file "./path-to-file.md" --assets-folder "./path-to-assets"
+ * node scripts/add-guide.js --title "Guide Title" --description "Guide description" --content-file "./path-to-file.md" --assets-folder "./path-to-assets"
  */
 
 const fs = require('fs');
@@ -31,29 +31,15 @@ for (let i = 0; i < args.length; i += 2) {
 }
 
 // Validate required arguments
-const requiredArgs = ['title', 'description', 'category', 'content-file'];
+const requiredArgs = ['title', 'description', 'content-file'];
 const missingArgs = requiredArgs.filter(arg => !options[arg]);
 
 if (missingArgs.length > 0) {
   console.error('Error: Missing required arguments: ' + missingArgs.join(', '));
   console.error(`
 Usage:
-  node scripts/add-guide.js --title "Guide Title" --description "Guide description" --category "beginner" --content-file "./path-to-file.md" --assets-folder "./path-to-assets"
-
-Categories:
-  - beginner
-  - intermediate
-  - advanced
-  - mechanics
-  - quests
+  node scripts/add-guide.js --title "Guide Title" --description "Guide description" --content-file "./path-to-file.md" --assets-folder "./path-to-assets"
   `);
-  process.exit(1);
-}
-
-// Validate category
-const validCategories = ['beginner', 'intermediate', 'advanced', 'mechanics', 'quests'];
-if (!validCategories.includes(options.category)) {
-  console.error(`Error: Invalid category '${options.category}'. Valid categories are: ${validCategories.join(', ')}`);
   process.exit(1);
 }
 
@@ -131,7 +117,6 @@ async function addGuide() {
     description: '${options.description.replace(/'/g, "\\'")}',
     image: '/images/guide-default.jpg', // Replace with actual image path later
     slug: '${slug}',
-    category: '${options.category}',
     contentPath: '/content/${slug}.md'`;
     
     // Add assetBasePath if provided

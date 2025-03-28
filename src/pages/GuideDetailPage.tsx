@@ -62,7 +62,6 @@ export function GuideDetailPage() {
       <div>
         <div className="mb-8 flex flex-col md:flex-row justify-between items-start gap-4">
           <div>
-            <span className="text-xs px-2 py-1 rounded bg-primary-transparent border border-border-primary text-primary mb-2 inline-block">{guide.category}</span>
             <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-hover drop-shadow-[0_2px_4px_rgba(252,213,73,0.2)]">
               {guide.title}
             </h1>
