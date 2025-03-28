@@ -75,7 +75,7 @@ Preem weapon where the extra stat is **not** visible (Weapon Damage)
 While the other stats are pretty straightforward and common in other video games, you might be wondering how pixel and physical strength affect your gameplay in 77-Bit. Until I can take the time to fully test and compare them in-game, here is the info from the official handbook:
 
 > Some abilities might scale with Pixel Power, others with Physical Power, or even both.
-> 
+
 
 > [Basic] Attacks vary based on the equipped weapon's type, affecting their speed, reach, and damage profile. All attacks scale with both Pixel and Power, ensuring they remain useful regardless of your chosen class.
 > 
@@ -226,21 +226,3 @@ Every class can use every weapon, both ranged or melee.
 > The Sentinel class cannot generate Bytecell (energy) when using Glitch type weapons to attack.
 > I am not sure if this is intended or a bug.
 > 
-
-# Unverified Information
-
-The information here is incomplete or inconsistent… to be taken with a grain of salt.
-
-## Weapon Prefixes (item level)
-
-The game has a hidden stat which indicates the base damage of each weapon. This state can *generally ****(this isn't always the case)* be known through the prefix of the weapon. Here are the prefixes:
-
-| Prefix | Item Level | Base Damage |
-| --- | --- | --- |
-| none | 10 | 11 |
-| Debugged | 20 | 21 |
-| Overclocked | 30 | 31 |
-| Encrypted | 40 | 41 |
-| Zero-Point | 50 | 51 |
-
-So a Tech Katana would have base damage of 11 but a Debugged Tech Katana would have a base damage of 21.

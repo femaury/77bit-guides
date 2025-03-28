@@ -1,6 +1,7 @@
 import ReactMarkdown from 'react-markdown';
 import { cn } from '../lib/utils';
 import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 
 interface MarkdownContentProps {
   content: string;
@@ -9,21 +10,120 @@ interface MarkdownContentProps {
 }
 
 export function MarkdownContent({ content, className, baseImagePath = '' }: MarkdownContentProps) {
-  // Handle Notion's image paths if needed
-  const processedContent = baseImagePath 
-    ? content.replace(/!\[(.*?)\]\((.*?)\)/g, (match, alt, path) => {
-        // If path is already absolute or external, don't modify it
-        if (path.startsWith('http') || path.startsWith('/')) {
-          return match;
+  // Preprocess markdown to transform Notion-style callouts before rendering
+  const preprocessMarkdown = (markdown: string): string => {
+    // First handle image paths
+    const processedContent = baseImagePath 
+      ? markdown.replace(/!\[(.*?)\]\((.*?)\)/g, (match, alt, path) => {
+          // If path is already absolute or external, don't modify it
+          if (path.startsWith('http') || path.startsWith('/')) {
+            return match;
+          }
+          return `![${alt}](${baseImagePath}/${path})`;
+        })
+      : markdown;
+    
+    // Now find all Notion-style callouts and replace them with a custom format
+    // that we can then process with a custom component
+    const lines = processedContent.split('\n');
+    let inCallout = false;
+    let calloutType = '';
+    let calloutTitle = '';
+    let calloutEmoji = '';
+    let calloutContent = '';
+    const resultLines = [];
+    
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      
+      // Check for callout start ("> 💡" or "> ⚠️" pattern)
+      if (line.match(/^>\s*(💡|⚠️|ℹ️|📝|🚨|✅|❓|🔔)\s*$/) && !inCallout) {
+        // Start of a callout
+        inCallout = true;
+        const match = line.match(/^>\s*(💡|⚠️|ℹ️|📝|🚨|✅|❓|🔔)\s*$/);
+        calloutEmoji = match ? match[1] : '';
+        
+        // Determine callout type from emoji
+        switch (calloutEmoji) {
+          case '💡': calloutType = 'tip'; calloutTitle = 'Tip'; break;
+          case '⚠️': calloutType = 'warning'; calloutTitle = 'Warning'; break;
+          case 'ℹ️': calloutType = 'info'; calloutTitle = 'Info'; break;
+          case '📝': calloutType = 'note'; calloutTitle = 'Note'; break;
+          case '🚨': calloutType = 'alert'; calloutTitle = 'Alert'; break;
+          case '✅': calloutType = 'success'; calloutTitle = 'Success'; break;
+          case '❓': calloutType = 'question'; calloutTitle = 'Question'; break;
+          case '🔔': calloutType = 'important'; calloutTitle = 'Important'; break;
+          default: calloutType = 'note'; calloutTitle = 'Note';
         }
-        return `![${alt}](${baseImagePath}/${path})`;
-      })
-    : content;
-
+        
+        calloutContent = '';
+        
+        // Skip the next line if it's just ">"
+        if (i + 1 < lines.length && lines[i + 1].trim() === '>') {
+          i++;
+        }
+      } 
+      // Check if we're in a callout and collecting content
+      else if (inCallout && line.startsWith('>')) {
+        // Remove the leading > and add to callout content
+        calloutContent += line.replace(/^>\s*/, '') + '\n';
+      } 
+      // Check if callout is ending (next line is not a blockquote or end of file)
+      else if (inCallout && (i === lines.length - 1 || !lines[i].startsWith('>'))) {
+        // End of callout
+        // Use a special HTML comment format that we can parse later
+        resultLines.push('');
+        resultLines.push(`<!-- NOTION-CALLOUT type="${calloutType}" emoji="${calloutEmoji}" title="${calloutTitle}" -->`);
+        resultLines.push(calloutContent.trim());
+        resultLines.push('<!-- END-NOTION-CALLOUT -->');
+        resultLines.push('');
+        
+        inCallout = false;
+        // Process current line normally
+        resultLines.push(line);
+      } 
+      // Regular line, not in a callout
+      else {
+        resultLines.push(line);
+      }
+    }
+    
+    // If we're still in a callout at the end of the file, close it
+    if (inCallout) {
+      resultLines.push('');
+      resultLines.push(`<!-- NOTION-CALLOUT type="${calloutType}" emoji="${calloutEmoji}" title="${calloutTitle}" -->`);
+      resultLines.push(calloutContent.trim());
+      resultLines.push('<!-- END-NOTION-CALLOUT -->');
+      resultLines.push('');
+    }
+    
+    return resultLines.join('\n');
+  };
+  
+  // Process the content
+  const processedContent = preprocessMarkdown(content);
+  
+  // Find all callout sections in the processed markdown
+  const calloutPattern = /<!-- NOTION-CALLOUT type="([^"]+)" emoji="([^"]+)" title="([^"]+)" -->\n([\s\S]*?)\n<!-- END-NOTION-CALLOUT -->/g;
+  
+  // Replace them with custom elements
+  const contentWithCallouts = processedContent.replace(calloutPattern, (_, type, emoji, title, calloutContent) => {
+    // We'll handle the markdown content directly as a data attribute
+    // No need for a placeholder as we'll process it completely in the custom component
+    return `<div class="notion-callout notion-callout-${type}" data-callout-type="${type}" data-callout-emoji="${emoji}" data-callout-title="${title}" data-callout-content="${encodeURIComponent(calloutContent)}">
+      <div class="notion-callout-icon">${emoji}</div>
+      <div class="notion-callout-content">
+        <div class="notion-callout-title">${title}</div>
+        <div class="notion-callout-text"></div>
+      </div>
+    </div>`;
+  });
+  
   return (
     <div className={cn('prose prose-invert prose-yellow max-w-none', className)}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]} // Add GitHub Flavored Markdown support for tables
+        rehypePlugins={[rehypeRaw]} // Allow raw HTML in markdown
         components={{
           // First level headers are handled by our page layout, so we style this as a slightly smaller header
           h1: ({ children }) => (
@@ -109,7 +209,7 @@ export function MarkdownContent({ content, className, baseImagePath = '' }: Mark
             </td>
           ),
           code: ({ children, className }) => {
-            // Check if it's an inline code or a code block
+            // Check if it's an inline code or a regular code block
             const isInline = !className;
             return isInline ? (
               <code className="bg-black/30 px-1.5 py-0.5 rounded text-primary/90 font-mono text-sm">
@@ -148,9 +248,46 @@ export function MarkdownContent({ content, className, baseImagePath = '' }: Mark
               {children}
             </div>
           ),
+          // Handle our custom callout div
+          div: ({ className, children, ...props }) => {
+            // Check if this is our callout div
+            if (className?.includes('notion-callout')) {
+              // Get the stored markdown content from the data attribute
+              // @ts-expect-error - We know these properties exist on our custom divs
+              const calloutContent = props['data-callout-content'] ? decodeURIComponent(props['data-callout-content']) : '';
+              // @ts-expect-error - Getting emoji and title from data attributes
+              const emoji = props['data-callout-emoji'] || '';
+              
+              return (
+                <div className={className}>
+                  <div className="notion-callout-icon">{emoji}</div>
+                  <div className="notion-callout-content">
+                    <div className="notion-callout-text">
+                      <ReactMarkdown 
+                        remarkPlugins={[remarkGfm]}
+                        components={{
+                          p: ({ children }) => <p className="mb-3">{children}</p>,
+                          strong: ({ children }) => <strong className="font-bold text-inherit">{children}</strong>,
+                          a: ({ children, href }) => <a href={href} className="text-inherit underline">{children}</a>,
+                          ul: ({ children }) => <ul className="list-disc ml-5 mb-3">{children}</ul>,
+                          ol: ({ children }) => <ol className="list-decimal ml-5 mb-3">{children}</ol>,
+                          li: ({ children }) => <li className="mb-1">{children}</li>,
+                          code: ({ children }) => <code className="bg-black/30 px-1 py-0.5 rounded font-mono text-sm">{children}</code>
+                        }}
+                      >
+                        {calloutContent}
+                      </ReactMarkdown>
+                    </div>
+                  </div>
+                </div>
+              );
+            }
+            // Normal div
+            return <div className={className}>{children}</div>;
+          }
         }}
       >
-        {processedContent}
+        {contentWithCallouts}
       </ReactMarkdown>
     </div>
   );
