@@ -26,18 +26,19 @@ export function MarkdownContent({ content, className, baseImagePath = '' }: Mark
       <ReactMarkdown
         remarkPlugins={[remarkGfm]} // Add GitHub Flavored Markdown support for tables
         components={{
+          // First level headers are handled by our page layout, so we style this as a slightly smaller header
           h1: ({ children }) => (
-            <h1 className="text-3xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-hover drop-shadow-[0_2px_4px_rgba(252,213,73,0.2)]">
+            <h1 className="text-2xl font-bold mb-6 mt-2 text-yellow-500/90 border-b border-border-primary pb-4">
               {children}
             </h1>
           ),
           h2: ({ children }) => (
-            <h2 className="text-2xl font-bold mt-10 mb-4 text-yellow-500/90 drop-shadow">
+            <h2 className="text-xl font-bold mt-10 mb-4 text-yellow-500/90 drop-shadow">
               {children}
             </h2>
           ),
           h3: ({ children }) => (
-            <h3 className="text-xl font-bold mt-8 mb-3 text-yellow-500/80">
+            <h3 className="text-lg font-bold mt-8 mb-3 text-yellow-500/80">
               {children}
             </h3>
           ),
@@ -62,12 +63,12 @@ export function MarkdownContent({ content, className, baseImagePath = '' }: Mark
             </li>
           ),
           blockquote: ({ children }) => (
-            <blockquote className="border-l-4 border-primary/40 pl-4 italic text-gray-400">
+            <blockquote className="border-l-4 border-primary/40 pl-4 italic text-gray-400 my-6 bg-bg-primary/30 py-2 pr-4 rounded-r">
               {children}
             </blockquote>
           ),
           a: ({ children, href }) => (
-            <a href={href} className="text-primary hover:text-primary-hover underline">
+            <a href={href} className="text-primary hover:text-primary-hover underline transition-colors">
               {children}
             </a>
           ),
@@ -125,11 +126,16 @@ export function MarkdownContent({ content, className, baseImagePath = '' }: Mark
             <hr className="my-8 border-t border-[rgba(252,213,73,0.1)]" />
           ),
           img: ({ src, alt }) => (
-            <img 
-              src={src} 
-              alt={alt || ''} 
-              className="rounded-lg my-6 max-w-full h-auto border border-[rgba(252,213,73,0.2)]" 
-            />
+            <div className="my-6">
+              <img 
+                src={src} 
+                alt={alt || ''} 
+                className="rounded-lg max-w-full h-auto border border-[rgba(252,213,73,0.2)] shadow-md" 
+              />
+              {alt && alt !== 'image.png' && (
+                <p className="text-sm text-center text-gray-400 mt-2">{alt}</p>
+              )}
+            </div>
           ),
           aside: ({ children }) => (
             <div className="bg-[rgba(252,213,73,0.05)] border border-[rgba(252,213,73,0.2)] rounded-lg p-4 my-6">
