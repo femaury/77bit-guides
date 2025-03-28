@@ -15,9 +15,9 @@ export function HomePage() {
       <div>
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-hover drop-shadow-[0_2px_4px_rgba(252,213,73,0.2)] mb-4">
-            77-bit Game Guides
+            Community Guides
           </h1>
-          <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
             Community-created guides to help you navigate the world of 77-bit. Select a guide to start your journey.
           </p>
         </div>
