@@ -57,10 +57,12 @@ Here is the list of each stat a weapon of rarity Preem or higher can roll (on to
 
 > 💡
 > 
-> You'll notice the first stat is weapon damage. This basically means your weapon will have **2x the base damage**! This is the best stat to roll in the game on any weapon.
+> You'll notice the first stat is weapon damage. This basically means your weapon will have **2x the base damage**! It also means the weapon will get **2x more damage per level upgrade**.
 > 
-> When you see a Preem weapon with only damage, a Vandal weapon with only 1 extra stat or a Mod-Tech weapon with only 2 extra stats, it's because they rolled the Weapon Damage stat, which is added to the always displayed base damage.
-> 
+> This is the best stat to roll in the game on any weapon and will make a 82 base (so 41 with weapon damage stat) scaler higher than a 110 base damage.
+
+
+When you see a Preem weapon with only damage, a Vandal weapon with only 1 extra stat or a Mod-Tech weapon with only 2 extra stats, it's because they rolled the Weapon Damage stat, which is added to the always displayed base damage.
 
 Preem weapon where the extra stat is visible (not Weapon Damage)
 
