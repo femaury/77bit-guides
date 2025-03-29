@@ -1,5 +1,29 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'RedHat Mono';
+  font-style: normal;
+  font-weight: normal;
+  src: url('/fonts/RedHatMono-Regular.woff2') format('woff2'),
+       url('/fonts/RedHatMono-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'RedHat Mono';
+  font-style: normal;
+  font-weight: bold;
+  src: url('/fonts/RedHatMono-Bold.woff2') format('woff2'),
+       url('/fonts/RedHatMono-Bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Radiona Black';
+  font-style: normal;
+  font-weight: normal;
+  src: url('/fonts/radiona-black.woff2') format('woff2'),
+       url('/fonts/radiona-black.woff') format('woff');
+}
+
 @theme {
   --color-primary: #FCD549;
   --color-primary-hover: #fce179;
@@ -26,13 +50,23 @@
 
 @layer base {
   :root {
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'RedHat Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     color-scheme: dark;
+    --font-headlines: 'Radiona Black', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   }
 
   body {
     @apply bg-bg-primary text-text-primary;
     min-height: 100vh;
+  }
+
+  h1 {
+    font-family: var(--font-headlines);
+  }
+
+  h2, h3, h4, h5, h6 {
+    font-family: 'RedHat Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    @apply font-bold;
   }
 }
 
@@ -65,11 +99,17 @@
   }
 
   .header-primary {
-    @apply text-xl font-bold mb-4 text-primary drop-shadow;
+    @apply text-xl mb-4 text-primary drop-shadow;
+    font-family: 'RedHat Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    @apply font-bold;
   }
 
   .header-gradient {
-    @apply font-bold text-2xl mb-2 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-hover drop-shadow-[0_2px_4px_rgba(252,213,73,0.2)];
+    @apply mb-2 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-hover drop-shadow-[0_2px_4px_rgba(252,213,73,0.2)];
+    font-family: var(--font-headlines);
+    font-size: 2.75rem;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
   }
 
   .badge-status {
@@ -83,15 +123,23 @@
 
 /* Notion Content Styling */
 .notion-content h1 {
-  @apply text-3xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-hover drop-shadow-[0_2px_4px_rgba(252,213,73,0.2)];
+  @apply mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-hover drop-shadow-[0_2px_4px_rgba(252,213,73,0.2)];
+  font-family: var(--font-headlines);
+  font-size: 2.75rem;
+  line-height: 1.2;
+  letter-spacing: 0.03em;
 }
 
 .notion-content h2 {
-  @apply text-2xl font-bold mt-10 mb-4 text-primary drop-shadow;
+  @apply text-2xl mt-10 mb-4 text-primary drop-shadow;
+  font-family: 'RedHat Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  @apply font-bold;
 }
 
 .notion-content h3 {
-  @apply text-xl font-bold mt-8 mb-3 text-primary;
+  @apply text-xl mt-8 mb-3 text-primary;
+  font-family: 'RedHat Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  @apply font-bold;
 }
 
 .notion-content p {
@@ -172,13 +220,24 @@
   color: #e1e1e1;
 }
 
-.guide-article h1,
+.guide-article h1 {
+  scroll-margin-top: 100px;
+  font-family: var(--font-headlines);
+  font-size: 2.75rem;
+  line-height: 1.2;
+  letter-spacing: 0.03em;
+  margin-bottom: 1.5rem;
+  color: var(--color-primary);
+}
+
 .guide-article h2,
 .guide-article h3,
 .guide-article h4,
 .guide-article h5,
 .guide-article h6 {
   scroll-margin-top: 100px;
+  font-family: 'RedHat Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  @apply font-bold;
 }
 
 /* Add a subtle highlight to headings when hovering for better UX */
@@ -208,7 +267,7 @@
 .guide-article pre code {
   display: block;
   padding: 1rem;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family: 'RedHat Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   font-size: 0.9rem;
   line-height: 1.6;
   overflow-x: auto;
@@ -324,7 +383,9 @@
 }
 
 .notion-callout-title {
-  @apply font-semibold mb-1.5;
+  @apply mb-1.5;
+  font-family: 'RedHat Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  @apply font-semibold;
 }
 
 .notion-callout-text {
