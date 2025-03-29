@@ -8,7 +8,7 @@ import puppeteer from 'puppeteer';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Array of routes to prerender (you'll need to expand this based on your guides)
+// Array of routes to prerender
 const routesToPrerender = [
   '/',
   '/guides/how-to-play-77-bit',
@@ -22,34 +22,68 @@ async function prerender() {
   console.log('Building the app...');
   execSync('npm run build', { stdio: 'inherit' });
   
-  // Start the preview server
-  console.log('Starting preview server...');
-  const server = execSync('npm run preview -- --port 5173', { 
-    stdio: 'pipe',
-    detached: true
-  });
-  
-  // Give the server time to start
-  await new Promise(resolve => setTimeout(resolve, 2000));
+  console.log('Starting prerendering process...');
   
   try {
+    // Get the absolute path to the dist directory
+    const distDir = path.resolve(__dirname, '../dist');
+    
     // Launch puppeteer
     console.log('Launching browser...');
     const browser = await puppeteer.launch({
-      headless: 'new', // Use the new headless mode
+      headless: 'new',
       args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
     
     for (const route of routesToPrerender) {
       console.log(`Prerendering ${route}...`);
+      
+      // Create the file path where this route's content will be saved
+      const outputDir = route === '/' 
+        ? distDir 
+        : path.join(distDir, route);
+      
+      const outputPath = path.join(outputDir, 'index.html');
+      
+      // Create directories if they don't exist
+      if (route !== '/') {
+        fs.mkdirSync(outputDir, { recursive: true });
+      }
+      
+      // Read the existing index.html file
+      let indexContent;
+      try {
+        indexContent = fs.readFileSync(path.join(distDir, 'index.html'), 'utf8');
+      } catch (error) {
+        console.error(`Error reading index.html: ${error.message}`);
+        throw error;
+      }
+      
+      // Create a new page
       const page = await browser.newPage();
       
-      // Navigate to the page
-      await page.goto(`http://localhost:5173${route}`, {
-        waitUntil: 'networkidle2'
+      // Set content to our index.html
+      await page.setContent(indexContent, {
+        waitUntil: 'networkidle0',
       });
       
-      // Wait some time to ensure all React effects have run
+      // Set the route for the page to render
+      await page.evaluate((currentRoute) => {
+        // This will be executed in the browser context
+        window.history.pushState({}, '', currentRoute);
+        
+        // Dispatch a popstate event to trigger route change
+        const popStateEvent = new PopStateEvent('popstate');
+        window.dispatchEvent(popStateEvent);
+        
+        // Let React router handle the new URL
+        return new Promise(resolve => setTimeout(resolve, 500));
+      }, route);
+      
+      // Wait for the page content to load
+      await page.waitForSelector('#root', { timeout: 5000 });
+      
+      // Additional wait for React to render
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       // Extract the SEO data
@@ -89,10 +123,10 @@ async function prerender() {
         return windowData;
       });
       
-      // Get the HTML content
+      // Get the current HTML content
       let html = await page.content();
       
-      // Clean up some paths
+      // Clean up some paths (if needed)
       html = html.replace(/\/_assets\//g, '/assets/');
       
       // Remove any existing meta tags
@@ -114,17 +148,6 @@ async function prerender() {
     <link rel="canonical" href="${seoData.canonical}">
 </head>`);
       
-      // Determine the output path
-      let outputPath;
-      if (route === '/') {
-        outputPath = path.join(__dirname, '../dist/index.html');
-      } else {
-        // For /guides/X paths, we create a folder structure
-        const dirPath = path.join(__dirname, '../dist', route);
-        fs.mkdirSync(dirPath, { recursive: true });
-        outputPath = path.join(dirPath, 'index.html');
-      }
-      
       // Write the file
       fs.writeFileSync(outputPath, html);
       console.log(`Saved ${outputPath}`);
@@ -137,16 +160,11 @@ async function prerender() {
     
   } catch (error) {
     console.error('Error during prerendering:', error);
-  } finally {
-    // Kill the preview server
-    if (server.pid) {
-      try {
-        process.kill(-server.pid);
-      } catch (e) {
-        console.error('Failed to kill server:', e);
-      }
-    }
+    throw error; // Re-throw to properly fail the process
   }
 }
 
-prerender().catch(console.error); 
+prerender().catch(error => {
+  console.error('Prerender process failed:', error);
+  process.exit(1); // Exit with error code to fail CI
+}); 
