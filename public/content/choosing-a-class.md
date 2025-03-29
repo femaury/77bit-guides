@@ -12,6 +12,8 @@ Which class will you pick?
 > 💡
 > 
 > Note that **each class can play the game solo** and deal enough damage to progress through the whole experience. If you play in a group, make sure to synergise your class and skill decisions with your teammates!
+>
+> **If you want the easiest progression, pick the Technomancer class and make sure to take Photon Torpedo as your first skill.**
 
 > 💡
 > 

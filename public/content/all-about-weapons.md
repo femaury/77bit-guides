@@ -223,6 +223,6 @@ Every class can use every weapon, both ranged or melee.
 
 > ⚠️
 > 
-> The Sentinel class cannot generate Bytecell (energy) when using Glitch type weapons to attack.
+> The Sentinel class cannot generate Bytecell (energy) when using Glitch type weapons to attack. Also does not seem to work with Slinger type weapons. Droids work though...
 > I am not sure if this is intended or a bug.
 > 

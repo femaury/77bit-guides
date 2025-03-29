@@ -28,7 +28,7 @@
     "image": "/images/class-select.png",
     "slug": "choosing-a-class",
     "contentPath": "/content/choosing-a-class.md",
-    "lastUpdated": "2025-03-28",
+    "lastUpdated": "2025-03-29",
     "assetBasePath": "/content/choosing-a-class",
     "related": ["4"]
   },
@@ -39,7 +39,7 @@
     "image": "/images/weapons_inventory.png",
     "slug": "all-about-weapons",
     "contentPath": "/content/all-about-weapons.md",
-    "lastUpdated": "2025-03-28",
+    "lastUpdated": "2025-03-29",
     "assetBasePath": "/content/all-about-weapons"
   }
 ] 
