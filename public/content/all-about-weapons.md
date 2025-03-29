@@ -133,7 +133,9 @@ Killing the boss in either dungeon rewards you with a lootbox.
 
 There are 3 tiers of weapon lootboxes you can purchase with your Darknet currency.
 
-- Base damage for all 3 tiers is: 50 → 110 → 240
+- Base damage for tier 1 is 50 (up to 100 with weapon damage stat)
+- Base damage for tier 2 is 110 (up to 220 with weapon damage stat)
+- Base damage for tier 3 is 240 (up to 480 with weapon damage stat)
 - All weapons inside are Pixel weapons
 - There is a glitch type weapon (pixel glitch)
 
