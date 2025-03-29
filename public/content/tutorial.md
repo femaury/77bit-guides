@@ -39,7 +39,10 @@ Your first quest is to go pick up gear and equip yourself. Walk down to the righ
 
 Open your inventory by pressing `i` and then either double-click or right-click + click "equip" on each to equip them.
 
-[tutorial_equip.webm](/content/tutorial/tutorial_equip.webm)
+<video width="100%" controls>
+  <source src="/content/tutorial/tutorial_equip.webm" type="video/webm">
+  Your browser does not support the video tag.
+</video>
 
 Once you did that, go back to the Shadow Broker for your next steps. He will then instruct you to go test out this new gear.
 
@@ -47,7 +50,10 @@ Once you did that, go back to the Shadow Broker for your next steps. He will the
 
 Head up the map to where a machine will spawn a dummy sentry. Kill it using your basic attack (left mouse button) or power attack (right mouse button).
 
-[tutorial_attack.webm](/content/tutorial/tutorial_attack.webm)
+<video width="100%" controls>
+  <source src="/content/tutorial/tutorial_attack.webm" type="video/webm">
+  Your browser does not support the video tag.
+</video>
 
 After that head back to the Shadow Broker for the next step.
 
@@ -55,7 +61,10 @@ After that head back to the Shadow Broker for the next step.
 
 You are currently playing the Hacker class, whose special skill can hack doors. Walk up to the door right next to the Shadow Broker and press `left shift` to hack it. The door will open.
 
-[tutorial_breach.webm](/content/tutorial/tutorial_breach.webm)
+<video width="100%" controls>
+  <source src="/content/tutorial/tutorial_breach.webm" type="video/webm">
+  Your browser does not support the video tag.
+</video>
 
 Left click on the door to head inside. This will load the next zone for the tutorial.
 
