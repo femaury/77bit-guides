@@ -16,6 +16,11 @@ export function SEO({ title, description, image, url }: SEOProps) {
   const metaDescription = description || defaultDescription;
   const metaImage = image || defaultImage;
   const metaUrl = url ? `${siteUrl}${url}` : siteUrl;
+  
+  // Convert relative image paths to absolute URLs
+  const absoluteMetaImage = metaImage.startsWith('http') 
+    ? metaImage 
+    : `${siteUrl}${metaImage}`;
 
   return (
     <Helmet
@@ -36,7 +41,7 @@ export function SEO({ title, description, image, url }: SEOProps) {
         },
         {
           property: 'og:image',
-          content: metaImage,
+          content: absoluteMetaImage,
         },
         {
           property: 'og:url',
@@ -60,7 +65,7 @@ export function SEO({ title, description, image, url }: SEOProps) {
         },
         {
           name: 'twitter:image',
-          content: metaImage,
+          content: absoluteMetaImage,
         },
       ]}
     />
