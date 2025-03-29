@@ -23,7 +23,7 @@ const injectMetadataPlugin = (): Plugin => {
 
       // If in build mode and generating the main index.html
       if (ctx.chunk?.isEntry) {
-        return html.replace('<!-- Base metadata - will be overridden by react-helmet-async -->', baseMetadata);
+        return html.replace('<!-- Base metadata - will be updated during build -->', baseMetadata);
       }
       return html;
     }
