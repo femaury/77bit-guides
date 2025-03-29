@@ -7,45 +7,6 @@ import { execSync } from 'child_process';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Define your routes and their metadata
-const routes = [
-  {
-    path: '/',
-    title: '77-bit Guides',
-    description: 'Community-created guides for the 77-Bit game. Learn useful tips, game data, mechanics, and more.',
-    image: '/images/77bit_wiki.png',
-    type: 'website'
-  },
-  {
-    path: '/guides/how-to-play-77-bit',
-    title: 'How to Play 77-Bit',
-    description: 'Learn the basics of how to play 77-Bit, a turn-based dungeon crawler.',
-    image: '/images/how-to-play.png',
-    type: 'article'
-  },
-  {
-    path: '/guides/tutorial',
-    title: 'Completing the in-game Tutorial',
-    description: 'Guidelines to help you complete the in-game tutorial and get your first steps in 77-Bit.',
-    image: '/images/tutorial.png',
-    type: 'article'
-  },
-  {
-    path: '/guides/choosing-a-class',
-    title: 'Choosing a Class in 77-Bit',
-    description: 'Guide to the different classes in 77-Bit and how to choose the right one for your playstyle.',
-    image: '/images/classes.png',
-    type: 'article'
-  },
-  {
-    path: '/guides/all-about-weapons',
-    title: 'All About Weapons in 77-Bit',
-    description: 'Detailed information about all weapons in 77-Bit, including stats, locations, and tips.',
-    image: '/images/weapons.png',
-    type: 'article'
-  }
-];
-
 // Base URL of your site
 const siteUrl = 'https://guides.77-bit.wiki';
 
@@ -67,6 +28,36 @@ async function generate() {
     console.error(`Error reading template HTML: ${error.message}`);
     process.exit(1);
   }
+  
+  // Read the guides data directly from the JSON file
+  let guidesData;
+  try {
+    const guidesPath = path.join(__dirname, '../src/data/guides.json');
+    guidesData = JSON.parse(fs.readFileSync(guidesPath, 'utf8'));
+  } catch (error) {
+    console.error(`Error reading guides data: ${error.message}`);
+    process.exit(1);
+  }
+  
+  // Create routes from guides data
+  const routes = [
+    // Home page
+    {
+      path: '/',
+      title: '77-bit Guides',
+      description: 'Community-created guides for the 77-Bit game. Learn useful tips, game data, mechanics, and more.',
+      image: '/images/77bit_wiki.png',
+      type: 'website'
+    },
+    // Guide pages
+    ...guidesData.map(guide => ({
+      path: `/guides/${guide.slug}`,
+      title: guide.title,
+      description: guide.description,
+      image: guide.image,
+      type: 'article'
+    }))
+  ];
   
   // Process each route
   for (const route of routes) {

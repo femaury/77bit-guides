@@ -83,7 +83,7 @@ export function GuideDetailPage() {
         month: 'short',
         day: 'numeric',
         year: 'numeric'
-      }).format(guide.lastUpdated)
+      }).format(new Date(guide.lastUpdated))
     : 'N/A';
 
   if (!guide) {
