@@ -39,11 +39,12 @@ jobs:
         run: npm ci --force
       - name: Install Puppeteer dependencies
         run: |
-          sudo apt-get update && sudo apt-get install -y \
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
           ca-certificates \
           fonts-liberation \
           libappindicator3-1 \
-          libasound2 \
+          libasound2-dev \
           libatk-bridge2.0-0 \
           libatk1.0-0 \
           libc6 \
