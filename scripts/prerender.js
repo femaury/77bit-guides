@@ -35,6 +35,9 @@ async function prerender() {
       args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
     
+    // Start a new server that we'll control directly
+    const server = await browser.createBrowserContext();
+    
     for (const route of routesToPrerender) {
       console.log(`Prerendering ${route}...`);
       
@@ -50,7 +53,7 @@ async function prerender() {
         fs.mkdirSync(outputDir, { recursive: true });
       }
       
-      // Read the existing index.html file
+      // Create a data URL with the index.html content
       let indexContent;
       try {
         indexContent = fs.readFileSync(path.join(distDir, 'index.html'), 'utf8');
@@ -62,23 +65,24 @@ async function prerender() {
       // Create a new page
       const page = await browser.newPage();
       
-      // Set content to our index.html
-      await page.setContent(indexContent, {
-        waitUntil: 'networkidle0',
+      // Load the file directly
+      const indexPath = `file://${path.join(distDir, 'index.html')}`;
+      await page.goto(indexPath, {
+        waitUntil: 'networkidle0'
       });
       
-      // Set the route for the page to render
-      await page.evaluate((currentRoute) => {
-        // This will be executed in the browser context
-        window.history.pushState({}, '', currentRoute);
+      // Update the URL and force navigation to the route
+      await page.evaluate((targetRoute) => {
+        // In client-side routing, we often have a mechanism to handle routes
+        window.location.hash = targetRoute;
         
-        // Dispatch a popstate event to trigger route change
-        const popStateEvent = new PopStateEvent('popstate');
-        window.dispatchEvent(popStateEvent);
+        // If using React Router, you might need to trigger route change differently
+        // This dispatches hashchange which many routers listen to
+        window.dispatchEvent(new HashChangeEvent('hashchange'));
         
-        // Let React router handle the new URL
+        // Let the app update
         return new Promise(resolve => setTimeout(resolve, 500));
-      }, route);
+      }, route === '/' ? '/' : route);
       
       // Wait for the page content to load
       await page.waitForSelector('#root', { timeout: 5000 });
