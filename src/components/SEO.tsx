@@ -1,4 +1,3 @@
-import { Helmet } from 'react-helmet-async';
 import { useEffect } from 'react';
 
 interface SEOProps {
@@ -38,8 +37,24 @@ export function SEO({
     ? metaImage 
     : `${siteUrl}${metaImage}`;
 
-  // Direct DOM manipulation to ensure metadata is set
+  // Direct DOM manipulation to ensure metadata is set only on client side when not prerendered
   useEffect(() => {
+    // Don't modify metadata if prerendered version exists
+    // @ts-expect-error - This comes from our prerender script
+    if (window.__PRERENDERED_METADATA__) {
+      // Just set the window.__SEO_DATA__ variable for consistency
+      // @ts-expect-error - This is for our build process
+      window.__SEO_DATA__ = {
+        title: `${title} | ${siteTitle}`,
+        description: metaDescription,
+        image: absoluteMetaImage,
+        url: metaUrl,
+        type: article ? 'article' : 'website',
+        canonical: metaCanonical
+      };
+      return;
+    }
+    
     // Set title
     document.title = `${title} | ${siteTitle}`;
     
@@ -79,6 +94,36 @@ export function SEO({
     }
     canonicalTag.setAttribute('href', metaCanonical);
 
+    // Set JSON-LD structured data
+    let jsonLdScript = document.querySelector('script[type="application/ld+json"]');
+    if (!jsonLdScript) {
+      jsonLdScript = document.createElement('script');
+      jsonLdScript.setAttribute('type', 'application/ld+json');
+      document.head.appendChild(jsonLdScript);
+    }
+    
+    jsonLdScript.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': article ? 'Article' : 'WebSite',
+      name: title,
+      headline: title,
+      description: metaDescription,
+      image: absoluteMetaImage,
+      url: metaUrl,
+      author: {
+        '@type': 'Organization',
+        name: '77-bit Community',
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: '77-bit Community',
+        logo: {
+          '@type': 'ImageObject',
+          url: `${siteUrl}/images/logo.png`,
+        },
+      },
+    });
+
     // Store SEO data in a global variable for pre-rendering
     // @ts-expect-error - This is for our build process
     window.__SEO_DATA__ = {
@@ -90,87 +135,8 @@ export function SEO({
       canonical: metaCanonical
     };
     
-    // Cleanup function not needed as we want the metadata to persist
   }, [title, metaDescription, absoluteMetaImage, metaUrl, metaCanonical, article, siteTitle]);
   
-  // Keep the Helmet component for SSG/prerendering support
-  return (
-    <Helmet
-      title={title}
-      titleTemplate={`%s | ${siteTitle}`}
-      meta={[
-        {
-          name: 'description',
-          content: metaDescription,
-        },
-        {
-          property: 'og:title',
-          content: `${title} | ${siteTitle}`,
-        },
-        {
-          property: 'og:description',
-          content: metaDescription,
-        },
-        {
-          property: 'og:image',
-          content: absoluteMetaImage,
-        },
-        {
-          property: 'og:url',
-          content: metaUrl,
-        },
-        {
-          property: 'og:type',
-          content: article ? 'article' : 'website',
-        },
-        {
-          name: 'twitter:card',
-          content: 'summary_large_image',
-        },
-        {
-          name: 'twitter:title',
-          content: `${title} | ${siteTitle}`,
-        },
-        {
-          name: 'twitter:description',
-          content: metaDescription,
-        },
-        {
-          name: 'twitter:image',
-          content: absoluteMetaImage,
-        },
-      ]}
-      link={[
-        {
-          rel: 'canonical',
-          href: metaCanonical,
-        },
-      ]}
-    >
-      {/* Schema.org markup for Google */}
-      <script type="application/ld+json">
-        {JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': article ? 'Article' : 'WebSite',
-          name: title,
-          headline: title,
-          description: metaDescription,
-          image: absoluteMetaImage,
-          url: metaUrl,
-          author: {
-            '@type': 'Organization',
-            name: '77-bit Community',
-          },
-          publisher: {
-            '@type': 'Organization',
-            name: '77-bit Community',
-            logo: {
-              '@type': 'ImageObject',
-              url: `${siteUrl}/images/logo.png`,
-            },
-          },
-        })}
-      </script>
-    </Helmet>
-  );
+  // No need to return a Helmet component anymore
+  return null;
 } 

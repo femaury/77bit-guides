@@ -133,23 +133,63 @@ async function prerender() {
       // Clean up some paths (if needed)
       html = html.replace(/\/_assets\//g, '/assets/');
       
-      // Remove any existing meta tags
-      html = html.replace(/<meta\s+(?:name|property)=["'](?:description|og:title|og:description|og:image|og:url|og:type|twitter:card|twitter:title|twitter:description|twitter:image)["']\s+content=["'][^"']*["']\s*\/?>/g, '');
-      html = html.replace(/<link\s+rel=["']canonical["']\s+href=["'][^"']*["']\s*\/?>/g, '');
+      // More thorough removal of existing meta tags, including those with data-rh attributes
+      html = html.replace(/<meta\s+(?:name|property)=["'](?:description|og:title|og:description|og:image|og:url|og:type|twitter:card|twitter:title|twitter:description|twitter:image)["'][^>]*>/g, '');
+      html = html.replace(/<link\s+rel=["']canonical["'][^>]*>/g, '');
       
-      // Inject proper meta tags before </head>
+      // Define the base URL using the correct domain from the HTML
+      const baseUrl = 'https://guides.77-bit.wiki';
+      
+      // Create full URLs for paths
+      const pageUrl = route === '/' 
+        ? baseUrl 
+        : `${baseUrl}${route}`;
+      
+      // Format the image URL properly
+      let imageUrl = seoData.image;
+      if (imageUrl && !imageUrl.startsWith('http')) {
+        // Handle relative image URLs
+        imageUrl = imageUrl.startsWith('/') 
+          ? `${baseUrl}${imageUrl}` 
+          : `${baseUrl}/${imageUrl}`;
+      }
+      
+      // Use a default image if none is provided
+      if (!imageUrl) {
+        imageUrl = `${baseUrl}/images/default-og-image.png`;
+      }
+      
+      // Ensure we have description
+      const description = seoData.description || 
+        'Guides and tutorials for playing 77 Bit, the turn-based dungeon crawler.';
+      
+      // Inject proper meta tags before </head> with data-prerender attribute to identify our tags
       html = html.replace('</head>', `
-    <meta name="description" content="${seoData.description}">
-    <meta property="og:title" content="${seoData.title}">
-    <meta property="og:description" content="${seoData.description}">
-    <meta property="og:image" content="${seoData.image}">
-    <meta property="og:url" content="${seoData.url}">
-    <meta property="og:type" content="${seoData.type}">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="${seoData.title}">
-    <meta name="twitter:description" content="${seoData.description}">
-    <meta name="twitter:image" content="${seoData.image}">
-    <link rel="canonical" href="${seoData.canonical}">
+    <!-- Primary Meta Tags -->
+    <meta name="description" content="${description}" data-prerender="true">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="${seoData.type || 'website'}" data-prerender="true">
+    <meta property="og:url" content="${pageUrl}" data-prerender="true">
+    <meta property="og:title" content="${seoData.title}" data-prerender="true">
+    <meta property="og:description" content="${description}" data-prerender="true">
+    <meta property="og:image" content="${imageUrl}" data-prerender="true">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" data-prerender="true">
+    <meta name="twitter:url" content="${pageUrl}" data-prerender="true">
+    <meta name="twitter:title" content="${seoData.title}" data-prerender="true">
+    <meta name="twitter:description" content="${description}" data-prerender="true">
+    <meta name="twitter:image" content="${imageUrl}" data-prerender="true">
+    
+    <!-- Canonical -->
+    <link rel="canonical" href="${pageUrl}" data-prerender="true">
+    
+    <!-- Script to prevent React Helmet from adding duplicate tags -->
+    <script>
+      // Flag that indicates metadata is already present from prerendering
+      window.__PRERENDERED_METADATA__ = true;
+    </script>
 </head>`);
       
       // Write the file
