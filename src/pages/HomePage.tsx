@@ -15,7 +15,9 @@ export function HomePage() {
             Community Guides
           </h1>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-            Community-created guides to help you navigate the world of 77-Bit. Select a guide to start your journey.
+            Community-created guides to help you navigate the world of 77-Bit.
+            <br />
+            Select a guide to start your journey.
           </p>
         </div>
 
