@@ -46,13 +46,15 @@
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.4);
   --inset-shadow-sm: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  --font-body: 'RedHat Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-headlines: 'Radiona Black', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 @layer base {
   :root {
-    font-family: 'RedHat Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-family: var(--font-body);
     color-scheme: dark;
-    --font-headlines: 'Radiona Black', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   }
 
   body {

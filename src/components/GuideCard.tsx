@@ -36,7 +36,7 @@ export function GuideCard({ guide, className }: GuideCardProps) {
         </div>
         
         <CardContent className="flex-grow flex flex-col p-6">
-          <CardTitle className="text-lg sm:text-xl transition-colors group-hover:text-[#FCD549]">
+          <CardTitle className="font-headlines tracking-wide text-lg sm:text-xl transition-colors text-primary">
             {guide.title}
           </CardTitle>
           <CardDescription className="mt-2 text-gray-400 line-clamp-2">
