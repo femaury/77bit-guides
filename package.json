@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "prerender": "node ./scripts/prerender.js",
+    "build:seo": "npm run build && npm run prerender",
+    "test:seo": "node ./scripts/test-seo.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -19,11 +22,13 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-helmet": "^6.1.0",
+    "react-helmet-async": "^2.0.5",
     "react-markdown": "^10.1.0",
     "react-router-dom": "^7.4.0",
     "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.1",
-    "tailwind-merge": "^3.0.2"
+    "tailwind-merge": "^3.0.2",
+    "vite-plugin-ssr": "^26.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
@@ -36,6 +41,7 @@
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^15.15.0",
+    "puppeteer": "^22.10.0",
     "tailwindcss": "^4.0.17",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",

@@ -104,6 +104,8 @@ export function GuideDetailPage() {
         description={guide.description}
         image={guide.image}
         url={`/guides/${guide.slug}`}
+        article={true}
+        canonical={`/guides/${guide.slug}`}
       />
       
       <div className="max-w-6xl mx-auto lg:px-4">
