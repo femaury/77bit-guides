@@ -9,9 +9,9 @@ interface SEOProps {
 
 export function SEO({ title, description, image, url }: SEOProps) {
   const siteTitle = '77-bit Guides';
-  const defaultDescription = 'Community-created guides for the 77-bit game. Learn mechanics, quest walkthroughs, and more.';
-  const defaultImage = '/images/77bit-guide-og.jpg';
-  const siteUrl = 'https://77bit-guides.vercel.app';
+  const defaultDescription = 'Community-created guides for the 77-Bit game. Learn useful tips, game data, mechanics, and more.';
+  const defaultImage = '/images/77bit_wiki.png';
+  const siteUrl = 'https://guides.77-bit.wiki';
 
   const metaDescription = description || defaultDescription;
   const metaImage = image || defaultImage;

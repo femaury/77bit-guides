@@ -7,10 +7,7 @@ export function HomePage() {
 
   return (
     <>
-      <SEO 
-        title="Game Guides" 
-        description="Community-created guides for the 77-bit game. Learn mechanics, quest walkthroughs, and more."
-      />
+      <SEO title="77-Bit Guides" image='/images/77bit_wiki.png' url='/'/>
       
       <div>
         <div className="text-center mb-12">
