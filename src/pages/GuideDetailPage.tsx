@@ -19,6 +19,7 @@ export function GuideDetailPage() {
   const [showTableOfContents, setShowTableOfContents] = useState<boolean>(false);
   const [readingTime, setReadingTime] = useState<number>(0);
   const [relatedGuides, setRelatedGuides] = useState<Guide[]>([]);
+  const [contentLoaded, setContentLoaded] = useState<boolean>(false);
 
   useEffect(() => {
     async function fetchContent() {
@@ -26,6 +27,11 @@ export function GuideDetailPage() {
       
       try {
         setLoading(true);
+        setContentLoaded(false);
+        
+        // Reset table of contents when loading a new guide
+        setShowTableOfContents(false);
+        
         const response = await fetch(guide.contentPath);
         
         if (!response.ok) {
@@ -36,9 +42,16 @@ export function GuideDetailPage() {
         setContent(text);
         setReadingTime(calculateReadingTime(text));
         setError(null);
+        
+        // Small delay to ensure DOM is updated before checking headings
+        setTimeout(() => {
+          setContentLoaded(true);
+        }, 50);
+        
       } catch (err) {
         console.error('Error loading content:', err);
         setError('Failed to load the guide content. Please try again later.');
+        setContentLoaded(true);
       } finally {
         setLoading(false);
       }
@@ -57,12 +70,12 @@ export function GuideDetailPage() {
 
   // Check if we should show the table of contents (after content loads)
   useEffect(() => {
-    if (!loading && articleRef.current) {
+    if (contentLoaded && articleRef.current) {
       // Only show ToC if there are at least 2 headings
       const headings = articleRef.current.querySelectorAll('h1, h2, h3');
       setShowTableOfContents(headings.length >= 2);
     }
-  }, [loading]);
+  }, [contentLoaded]);
 
   // Format the lastUpdated date for display, or show a default if not available
   const formattedDate = guide?.lastUpdated 
@@ -108,11 +121,14 @@ export function GuideDetailPage() {
           {guide.image && (
             <div className="relative mb-8 rounded-xl overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-t from-bg-primary/90 to-transparent z-10"></div>
-              <img 
-                src={guide.image} 
-                alt={guide.title} 
-                className="w-full h-64 object-cover"
-              />
+              <div className="aspect-[3/1] min-h-[16rem]">
+                <img 
+                  src={guide.image} 
+                  alt={guide.title} 
+                  className="w-full h-full object-cover"
+                  loading="eager" 
+                />
+              </div>
               <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
                 <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-hover drop-shadow-[0_2px_4px_rgba(252,213,73,0.2)]">
                   {guide.title}
@@ -159,22 +175,22 @@ export function GuideDetailPage() {
         {/* Two column layout with ToC and content */}
         <div className="flex flex-col lg:flex-row gap-8 justify-between">
           {/* Table of Contents sidebar - hidden on mobile, shown as sticky on desktop */}
-          {showTableOfContents && (
-            <aside className="hidden lg:block w-64 shrink-0">
-              <div className="sticky top-6">
+          <aside className="hidden lg:block w-64 shrink-0 min-h-[1px]">
+            <div className="sticky top-6">
+              {showTableOfContents && (
                 <TableOfContents 
                   articleRef={articleRef as React.RefObject<HTMLElement>} 
                   className="bg-bg-elevated/30 border border-border-primary rounded-lg p-4"
                 />
-              </div>
-            </aside>
-          )}
+              )}
+            </div>
+          </aside>
           
           {/* Article content */}
           <div className="flex-1 lg:mx-0 min-w-0">
             {/* Mobile ToC (dropdown style) */}
-            {showTableOfContents && (
-              <div className="lg:hidden mb-6">
+            <div className="lg:hidden mb-6 min-h-[1px]">
+              {showTableOfContents && (
                 <details className="bg-bg-elevated/30 border border-border-primary rounded-lg">
                   <summary className="p-4 font-medium cursor-pointer text-primary-hover hover:bg-bg-elevated/50 rounded-lg transition-colors">
                     Table of Contents
@@ -183,11 +199,11 @@ export function GuideDetailPage() {
                     <TableOfContents articleRef={articleRef as React.RefObject<HTMLElement>} />
                   </div>
                 </details>
-              </div>
-            )}
+              )}
+            </div>
             
-            {/* Guide content section */}
-            <article ref={articleRef} className="guide-article bg-bg-elevated/30 border border-border-primary rounded-lg p-4 sm:p-6 md:p-8">
+            {/* Guide content section - set a min-height for the article container */}
+            <article ref={articleRef} className="guide-article bg-bg-elevated/30 border border-border-primary rounded-lg p-4 sm:p-6 md:p-8 min-h-[500px]">
               {loading ? (
                 <div className="animate-pulse">
                   <div className="h-6 bg-bg-elevated/50 rounded w-3/4 mb-4"></div>
@@ -197,6 +213,10 @@ export function GuideDetailPage() {
                   <div className="h-4 bg-bg-elevated/50 rounded w-3/4 mb-6"></div>
                   <div className="h-6 bg-bg-elevated/50 rounded w-1/3 mb-4"></div>
                   <div className="h-4 bg-bg-elevated/50 rounded w-full mb-3"></div>
+                  <div className="h-4 bg-bg-elevated/50 rounded w-full mb-3"></div>
+                  <div className="h-4 bg-bg-elevated/50 rounded w-3/4 mb-3"></div>
+                  <div className="h-4 bg-bg-elevated/50 rounded w-full mb-6"></div>
+                  <div className="h-6 bg-bg-elevated/50 rounded w-1/2 mb-4"></div>
                   <div className="h-4 bg-bg-elevated/50 rounded w-full mb-3"></div>
                 </div>
               ) : error ? (
@@ -217,33 +237,35 @@ export function GuideDetailPage() {
               )}
             </article>
             
-            {/* Related guides section */}
-            {!loading && !error && relatedGuides.length > 0 && (
-              <div className="mt-12 pt-8 border-t border-border-primary">
-                <h3 className="text-lg font-semibold text-gray-300 mb-6">You might also like</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  {relatedGuides.map(relatedGuide => (
-                    <div 
-                      key={relatedGuide.id}
-                      className="bg-bg-elevated/30 border border-border-primary rounded-lg p-4 hover:bg-bg-elevated/50 transition-colors"
-                    >
-                      <Link to={`/guides/${relatedGuide.slug}`} className="block">
-                        <h4 className="font-medium text-primary-hover mb-2">{relatedGuide.title}</h4>
-                        <p className="text-sm text-gray-400">{relatedGuide.description}</p>
-                      </Link>
-                    </div>
-                  ))}
-                </div>
-                
-                <div className="flex justify-center mt-8">
-                  <Link to="/">
-                    <Button variant="primary">
-                      View All Guides
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            )}
+            {/* Related guides section - always reserve space */}
+            <div className="mt-12 pt-8 border-t border-border-primary min-h-[100px]">
+              {!loading && !error && relatedGuides.length > 0 && (
+                <>
+                  <h3 className="text-lg font-semibold text-gray-300 mb-6">You might also like</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    {relatedGuides.map(relatedGuide => (
+                      <div 
+                        key={relatedGuide.id}
+                        className="bg-bg-elevated/30 border border-border-primary rounded-lg p-4 hover:bg-bg-elevated/50 transition-colors"
+                      >
+                        <Link to={`/guides/${relatedGuide.slug}`} className="block">
+                          <h4 className="font-medium text-primary-hover mb-2">{relatedGuide.title}</h4>
+                          <p className="text-sm text-gray-400">{relatedGuide.description}</p>
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div className="flex justify-center mt-8">
+                    <Link to="/">
+                      <Button variant="primary">
+                        View All Guides
+                      </Button>
+                    </Link>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>
