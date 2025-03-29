@@ -44,7 +44,7 @@ async function generate() {
     // Home page
     {
       path: '/',
-      title: '77-bit Guides',
+      title: '77-Bit Guides',
       description: 'Community-created guides for the 77-Bit game. Learn useful tips, game data, mechanics, and more.',
       image: '/images/77bit_wiki.png',
       type: 'website'
@@ -66,7 +66,7 @@ async function generate() {
     // Format the title with site name
     const fullTitle = route.path === '/' 
       ? route.title 
-      : `${route.title} | 77-bit Guides`;
+      : `${route.title} | 77-Bit Guides`;
     
     // Create absolute URLs
     const pageUrl = route.path === '/' 

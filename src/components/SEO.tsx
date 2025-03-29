@@ -17,7 +17,7 @@ export function SEO({
   article = false,
   canonical
 }: SEOProps) {
-  const siteTitle = '77-bit Guides';
+  const siteTitle = '77-Bit Guides';
   const defaultDescription = 'Community-created guides for the 77-Bit game. Learn useful tips, game data, mechanics, and more.';
   const defaultImage = '/images/77bit_wiki.png';
   const siteUrl = 'https://guides.77-bit.wiki';
