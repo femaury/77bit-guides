@@ -36,7 +36,7 @@
     "id": "4",
     "title": "All About Weapons",
     "description": "Here is your one-stop guide to know all you need to know about weapons in 77-Bit. From what types of weapon there are, what their stats are, where to acquire them, how to use them and how to upgrade them.",
-    "image": "/images/weapons.png",
+    "image": "/images/weapons_inventory.png",
     "slug": "all-about-weapons",
     "contentPath": "/content/all-about-weapons.md",
     "lastUpdated": "2025-03-28",

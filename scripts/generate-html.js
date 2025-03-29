@@ -90,7 +90,7 @@ async function generate() {
     <meta property="og:image" content="${imageUrl}">
     
     <!-- Twitter -->
-    <meta name="twitter:card" content="summary" data-prerender="true">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="${pageUrl}">
     <meta name="twitter:title" content="${fullTitle}">
     <meta name="twitter:description" content="${route.description}">
