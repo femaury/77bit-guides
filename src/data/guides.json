@@ -41,5 +41,15 @@
     "contentPath": "/content/all-about-weapons.md",
     "lastUpdated": "2025-03-29",
     "assetBasePath": "/content/all-about-weapons"
+  },
+  {
+    "id": "5",
+    "title": "Which Daily Quests are Worth Doing",
+    "description": "A breakdown of all the important Daily Quests you can find in the 77-Bit world with their rewards explained.",
+    "image": "/images/dailies.png",
+    "slug": "which-daily-quests-are-worth-doing",
+    "contentPath": "/content/dailies.md",
+    "lastUpdated": "2025-03-30",
+    "assetBasePath": "/content/dailies"
   }
 ] 
