@@ -69,8 +69,6 @@ Here is what’s inside the Bites Pack II:
 - Dungeon Ticket (0 to 3)
 - Dry Noodles (30)
 
-### Technodruid: Synthetic Dreams
-
 ### Atlas: Swift Mercy
 
 Atlas is located on the far right of the map, just above the entrance to the first dungeon. Swift Mercy is one of 2 possible Daily Quests he gives.
