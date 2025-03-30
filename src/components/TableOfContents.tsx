@@ -9,9 +9,14 @@ interface HeadingItem {
 interface TableOfContentsProps {
   articleRef: React.RefObject<HTMLElement>;
   className?: string;
+  maxHeight?: string;
 }
 
-export function TableOfContents({ articleRef, className = '' }: TableOfContentsProps) {
+export function TableOfContents({ 
+  articleRef, 
+  className = '',
+  maxHeight = '80vh'  // Default max height of 80% of viewport height
+}: TableOfContentsProps) {
   const [headings, setHeadings] = useState<HeadingItem[]>([]);
   const [activeId, setActiveId] = useState<string>('');
 
@@ -73,39 +78,41 @@ export function TableOfContents({ articleRef, className = '' }: TableOfContentsP
   }
 
   return (
-    <div className={`table-of-contents ${className}`}>
+    <div className={`${className}`}>
       <h3 className="text-sm font-semibold uppercase text-yellow-500/90 mb-4">
         Table of Contents
       </h3>
-      <ul className="space-y-2 text-sm">
-        {headings.map((heading) => (
-          <li 
-            key={heading.id}
-            className="transition-all"
-            style={{ 
-              paddingLeft: `${(heading.level - 1) * 0.75}rem`,
-              opacity: heading.level > 3 ? 0.7 : 1,
-            }}
-          >
-            <a
-              href={`#${heading.id}`}
-              className={`block py-1 px-2 rounded hover:bg-bg-elevated transition-colors ${
-                activeId === heading.id
-                  ? 'text-yellow-500 font-medium border-l-2 border-yellow-500/70 pl-2 -ml-0.5'
-                  : 'text-gray-400 hover:text-gray-300'
-              }`}
-              onClick={(e) => {
-                e.preventDefault();
-                document.getElementById(heading.id)?.scrollIntoView({
-                  behavior: 'smooth',
-                });
+      <div className="overflow-y-auto" style={{ maxHeight }}>
+        <ul className="space-y-2 text-sm">
+          {headings.map((heading) => (
+            <li 
+              key={heading.id}
+              className="transition-all"
+              style={{ 
+                paddingLeft: `${(heading.level - 1) * 0.75}rem`,
+                opacity: heading.level > 3 ? 0.7 : 1,
               }}
             >
-              {heading.text}
-            </a>
-          </li>
-        ))}
-      </ul>
+              <a
+                href={`#${heading.id}`}
+                className={`block py-1 px-2 rounded hover:bg-bg-elevated transition-colors ${
+                  activeId === heading.id
+                    ? 'text-yellow-500 font-medium border-l-2 border-yellow-500/70 pl-2 -ml-0.5'
+                    : 'text-gray-400 hover:text-gray-300'
+                }`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById(heading.id)?.scrollIntoView({
+                    behavior: 'smooth',
+                  });
+                }}
+              >
+                {heading.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 } 
