@@ -212,9 +212,8 @@ This quest requires you to kill 8x Rune Sentry OR 3x Rune Observer. You do not n
 
 # Other Dailies
 
-The rest of the dailies in the game only reward you with pixels and XP. The only ones maybe worth doing are the ones in Smuggler’s Run (lvl 25+) which give a decent amount of pixels (~8k) and XP.
-
-There are also dailies in Byte City but the rewards are so low they are not worth doing.
+The rest of the dailies in the game only reward you with pixels and XP like the ones in Smugglers Run and Byte City... not enough to be worth your time.
+Better off selling feet pics to castor.
 
 # End Note
 
