@@ -245,11 +245,7 @@
 /* Add a subtle highlight to headings when hovering for better UX */
 .guide-article h2:hover::before,
 .guide-article h3:hover::before {
-  content: '#';
-  position: absolute;
-  left: -1rem;
-  color: rgba(252, 213, 73, 0.5);
-  opacity: 0.7;
+  content: '';
 }
 
 .guide-article h2,
@@ -439,4 +435,34 @@
 /* Ensure hydration issues don't occur with ReactMarkdown */
 .notion-callout * > div {
   @apply inline;
+}
+
+/* Anchor links styling */
+.anchor-link {
+  @apply text-inherit no-underline relative inline-block;
+  width: 100%;
+  padding-right: 1.5rem;
+}
+
+.anchor-link:hover::after {
+  content: "";
+  @apply absolute right-0 top-1/2 -translate-y-1/2 w-5 h-5 bg-no-repeat bg-center opacity-70;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='%23FCD549' class='w-5 h-5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244' /%3E%3C/svg%3E");
+}
+
+h1 .anchor-link:hover::after,
+h2 .anchor-link:hover::after,
+h3 .anchor-link:hover::after {
+  @apply opacity-100;
+}
+
+/* If the hash in the URL matches the ID, highlight the heading */
+:target {
+  @apply scroll-mt-16;  /* Add scroll margin to prevent the header from being hidden under fixed elements */
+}
+
+h1:target,
+h2:target,
+h3:target {
+  @apply bg-primary/10 px-2 py-1 -mx-2 rounded-md transition-colors duration-300;
 }

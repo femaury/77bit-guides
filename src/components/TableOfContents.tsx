@@ -28,13 +28,8 @@ export function TableOfContents({
     const headingElements = article.querySelectorAll<HTMLHeadingElement>('h1, h2, h3');
 
     // Process headings to create the TOC items
-    const headingItems: HeadingItem[] = Array.from(headingElements).map((heading, index) => {
-      // Create an ID if the heading doesn't have one
-      if (!heading.id) {
-        const id = `heading-${index}`;
-        heading.id = id;
-      }
-
+    const headingItems: HeadingItem[] = Array.from(headingElements).map((heading) => {
+      // Get the ID that was already set by the MarkdownContent component
       return {
         id: heading.id,
         text: heading.textContent || '',
@@ -102,9 +97,14 @@ export function TableOfContents({
                 }`}
                 onClick={(e) => {
                   e.preventDefault();
-                  document.getElementById(heading.id)?.scrollIntoView({
-                    behavior: 'smooth',
-                  });
+                  const element = document.getElementById(heading.id);
+                  if (element) {
+                    element.scrollIntoView({
+                      behavior: 'smooth',
+                    });
+                    // Update the URL with the heading ID without triggering a page reload
+                    window.history.pushState(null, '', `#${heading.id}`);
+                  }
                 }}
               >
                 {heading.text}

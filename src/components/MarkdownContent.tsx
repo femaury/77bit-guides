@@ -9,6 +9,18 @@ interface MarkdownContentProps {
   baseImagePath?: string;
 }
 
+// Helper function to generate URL-friendly IDs from heading text
+const generateSlug = (text: string): string => {
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')       // Replace spaces with dashes
+    .replace(/&/g, '-and-')     // Replace & with 'and'
+    .replace(/[^\w-]+/g, '')    // Remove all non-word chars
+    .replace(/--+/g, '-');      // Replace multiple dashes with single dash
+};
+
 export function MarkdownContent({ content, className, baseImagePath = '' }: MarkdownContentProps) {
   // Preprocess markdown to transform Notion-style callouts before rendering
   const preprocessMarkdown = (markdown: string): string => {
@@ -126,21 +138,36 @@ export function MarkdownContent({ content, className, baseImagePath = '' }: Mark
         rehypePlugins={[rehypeRaw]} // Allow raw HTML in markdown
         components={{
           // First level headers are handled by our page layout, so we style this as a slightly smaller header
-          h1: ({ children }) => (
-            <h1 className="text-2xl font-bold mb-6 mt-2 text-primary border-b border-border-primary pb-4">
-              {children}
-            </h1>
-          ),
-          h2: ({ children }) => (
-            <h2 className="text-xl font-bold mt-10 mb-4 text-primary drop-shadow">
-              {children}
-            </h2>
-          ),
-          h3: ({ children }) => (
-            <h3 className="text-lg font-bold mt-8 mb-3 text-primary/90">
-              {children}
-            </h3>
-          ),
+          h1: ({ children }) => {
+            const id = generateSlug(children?.toString() || '');
+            return (
+              <h1 id={id} className="text-2xl font-bold mb-6 mt-2 text-primary border-b border-border-primary pb-4">
+                <a href={`#${id}`} className="anchor-link">
+                  {children}
+                </a>
+              </h1>
+            );
+          },
+          h2: ({ children }) => {
+            const id = generateSlug(children?.toString() || '');
+            return (
+              <h2 id={id} className="text-xl font-bold mt-10 mb-4 text-primary drop-shadow">
+                <a href={`#${id}`} className="anchor-link">
+                  {children}
+                </a>
+              </h2>
+            );
+          },
+          h3: ({ children }) => {
+            const id = generateSlug(children?.toString() || '');
+            return (
+              <h3 id={id} className="text-lg font-bold mt-8 mb-3 text-primary/90">
+                <a href={`#${id}`} className="anchor-link">
+                  {children}
+                </a>
+              </h3>
+            );
+          },
           p: ({ children }) => (
             <p className="mb-4 text-gray-200/90 leading-relaxed">
               {children}

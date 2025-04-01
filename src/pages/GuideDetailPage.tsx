@@ -74,6 +74,18 @@ export function GuideDetailPage() {
       // Only show ToC if there are at least 2 headings
       const headings = articleRef.current.querySelectorAll('h1, h2, h3');
       setShowTableOfContents(headings.length >= 2);
+      
+      // If URL contains a hash, scroll to the corresponding element
+      if (window.location.hash && contentLoaded) {
+        const id = window.location.hash.substring(1);
+        const element = document.getElementById(id);
+        if (element) {
+          // Add a small delay to ensure rendering is complete
+          setTimeout(() => {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }, 100);
+        }
+      }
     }
   }, [contentLoaded]);
 
