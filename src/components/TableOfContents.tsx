@@ -27,11 +27,33 @@ export function TableOfContents({
     const headingElements = article.querySelectorAll<HTMLHeadingElement>('h1, h2, h3');
 
     // Process headings to create the TOC items
+    // Track heading texts to handle duplicates
+    const headingTextCount: Record<string, number> = {};
+    
     const headingItems: HeadingItem[] = Array.from(headingElements).map((heading) => {
-      // Get the ID that was already set by the MarkdownContent component
+      const headingText = heading.textContent || '';
+      
+      // Get the original ID that was set by the MarkdownContent component
+      let headingId = heading.id;
+      
+      // Check if this is a duplicate heading text and update the ID if necessary
+      if (headingText in headingTextCount) {
+        headingTextCount[headingText]++;
+        
+        // If the original ID doesn't already have a counter suffix,
+        // update both the DOM element's ID and the one we'll use in the TOC
+        if (!heading.id.match(/-\d+$/)) {
+          const newId = `${heading.id}-${headingTextCount[headingText]}`;
+          heading.id = newId;  // Update the actual DOM element ID
+          headingId = newId;   // Use the new ID for the TOC
+        }
+      } else {
+        headingTextCount[headingText] = 1;
+      }
+      
       return {
-        id: heading.id,
-        text: heading.textContent || '',
+        id: headingId,
+        text: headingText,
         level: parseInt(heading.tagName[1], 10),
       };
     });
