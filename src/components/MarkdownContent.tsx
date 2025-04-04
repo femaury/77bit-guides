@@ -205,13 +205,13 @@ export function MarkdownContent({ content, className, baseImagePath = '' }: Mark
           ),
           table: ({ children }) => (
             <div className="overflow-x-auto my-6">
-              <table>
+              <table className="min-w-full border border-[rgba(252,213,73,0.2)] rounded-lg border-separate border-spacing-0 text-xs">
                 {children}
               </table>
             </div>
           ),
           thead: ({ children }) => (
-            <thead>
+            <thead className="bg-[rgba(252,213,73,0.1)]">
               {children}
             </thead>
           ),
@@ -220,18 +220,24 @@ export function MarkdownContent({ content, className, baseImagePath = '' }: Mark
               {children}
             </tbody>
           ),
-          tr: ({ children }) => (
-            <tr>
-              {children}
-            </tr>
-          ),
+          tr: ({ children, ...props }) => {
+            // Special handling for rows to add border
+            // Use a safer approach to check if this is a tbody row
+            // @ts-expect-error - We're accessing DOM properties for a specific styling need
+            const isInTbody = props.node?.parentNode?.nodeName?.toLowerCase() === 'tbody';
+            return (
+              <tr className={`hover:bg-[rgba(255,255,255,0.03)] ${isInTbody ? 'border-b border-[rgba(252,213,73,0.1)]' : ''}`}>
+                {children}
+              </tr>
+            );
+          },
           th: ({ children }) => (
-            <th className="text-primary">
+            <th className="text-primary px-2 py-1.5 text-left text-xs font-medium border-r border-[rgba(252,213,73,0.1)] whitespace-nowrap tracking-tight">
               {children}
             </th>
           ),
           td: ({ children }) => (
-            <td className="text-gray-200/90">
+            <td className="text-gray-200/90 px-2 py-1.5 text-xs border-r border-[rgba(252,213,73,0.1)] whitespace-nowrap tracking-tight">
               {children}
             </td>
           ),
