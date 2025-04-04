@@ -51,11 +51,21 @@ async function generate() {
     },
     // Guide pages
     ...guidesData.map(guide => ({
-      path: `/guides/${guide.slug}`,
+      path: `/${guide.slug}`,
       title: guide.title,
       description: guide.description,
       image: guide.image,
       type: 'article'
+    })),
+    // Legacy redirect paths (for backward compatibility)
+    ...guidesData.map(guide => ({
+      path: `/guides/${guide.slug}`,
+      title: guide.title,
+      description: guide.description,
+      image: guide.image,
+      type: 'article',
+      isRedirect: true,
+      redirectTo: `/${guide.slug}`
     }))
   ];
   
@@ -73,32 +83,44 @@ async function generate() {
       ? siteUrl 
       : `${siteUrl}${route.path}`;
     
+    const canonicalUrl = route.isRedirect && route.redirectTo
+      ? `${siteUrl}${route.redirectTo}`
+      : pageUrl;
+    
     const imageUrl = route.image.startsWith('http') 
       ? route.image 
       : `${siteUrl}${route.image}`;
     
     // Create an HTML file with the proper metadata
-    const metaTags = `
+    let metaTags = `
     <!-- Primary Meta Tags -->
     <meta name="description" content="${route.description}">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="${route.type}">
-    <meta property="og:url" content="${pageUrl}">
+    <meta property="og:url" content="${canonicalUrl}">
     <meta property="og:title" content="${fullTitle}">
     <meta property="og:description" content="${route.description}">
     <meta property="og:image" content="${imageUrl}">
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="${pageUrl}">
+    <meta name="twitter:url" content="${canonicalUrl}">
     <meta name="twitter:title" content="${fullTitle}">
     <meta name="twitter:description" content="${route.description}">
     <meta name="twitter:image" content="${imageUrl}">
     
     <!-- Canonical -->
-    <link rel="canonical" href="${pageUrl}">
+    <link rel="canonical" href="${canonicalUrl}">
     `;
+    
+    // Add redirect meta tag for legacy URLs
+    if (route.isRedirect && route.redirectTo) {
+      metaTags += `
+    <!-- Redirect -->
+    <meta http-equiv="refresh" content="0;url=${route.redirectTo}">
+    `;
+    }
     
     // Add the meta tags to the HTML template
     let html = templateHtml;

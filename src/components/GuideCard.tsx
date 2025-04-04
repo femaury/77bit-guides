@@ -11,7 +11,7 @@ interface GuideCardProps {
 export function GuideCard({ guide, className }: GuideCardProps) {
   return (
     <Link 
-      to={`/guides/${guide.slug}`} 
+      to={`/${guide.slug}`} 
       className={cn("block group h-full", className)}
       aria-label={`Read ${guide.title} guide`}
     >

@@ -115,9 +115,9 @@ export function GuideDetailPage() {
         title={guide.title}
         description={guide.description}
         image={guide.image}
-        url={`/guides/${guide.slug}`}
+        url={`/${guide.slug}`}
         article={true}
-        canonical={`/guides/${guide.slug}`}
+        canonical={`/${guide.slug}`}
       />
       
       <div className="max-w-6xl mx-auto lg:px-4">
@@ -262,7 +262,7 @@ export function GuideDetailPage() {
                         key={relatedGuide.id}
                         className="bg-bg-elevated/30 border border-border-primary rounded-lg p-4 hover:bg-bg-elevated/50 transition-colors"
                       >
-                        <Link to={`/guides/${relatedGuide.slug}`} className="block">
+                        <Link to={`/${relatedGuide.slug}`} className="block">
                           <h4 className="font-medium text-primary-hover mb-2">{relatedGuide.title}</h4>
                           <p className="text-sm text-gray-400">{relatedGuide.description}</p>
                         </Link>
