@@ -88,6 +88,8 @@ We know for example that the Technomancer's damage abilities scale with Pixel St
 
 ### Weapon Damage Scaling
 
+Here is a table with the damage each weapon will do at each tier when level 10. Bases available through double damage are marked with a (x2) suffix.
+
 | Base Damage | Tier 0 lvl 10 | +1 lvl 10 | +2 lvl 10 | +3 lvl 10 | +4 lvl 10 | +5 lvl 10 |
 | ----------- | ------------- | --------- | --------- | --------- | --------- | --------- |
 | 11          | 38            | 92        | 173       | 281       | 416       | 578       |
