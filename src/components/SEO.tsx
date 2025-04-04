@@ -112,11 +112,11 @@ export function SEO({
       url: metaUrl,
       author: {
         '@type': 'Organization',
-        name: '77-bit Community',
+        name: '77-Bit Community',
       },
       publisher: {
         '@type': 'Organization',
-        name: '77-bit Community',
+        name: '77-Bit Community',
         logo: {
           '@type': 'ImageObject',
           url: `${siteUrl}/images/logo.png`,
