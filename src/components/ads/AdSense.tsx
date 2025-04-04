@@ -61,7 +61,7 @@ export function AdSense({ format = 'auto', slot, className = '' }: AdSenseProps)
       <ins
         className="adsbygoogle"
         style={{ display: 'block', height: format === 'rectangle' ? '160px' : 'auto' }}
-        data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" // IMPORTANT: Replace with your actual AdSense publisher ID
+        data-ad-client="ca-pub-8874867923375378"
         data-ad-slot={slot}
         data-ad-format={format === 'auto' ? 'auto' : 'rectangle'}
         data-full-width-responsive="true"
