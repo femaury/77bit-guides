@@ -16,13 +16,12 @@ If you just arrived in the world of 77-Bit, these are for you to help you get st
 
 The starter pack gets you a full set of gear you will be keeping until level 30. Along that it will give you a basic weapon to get you started. Make sure you level it up to level 10 asap (careful with the reforge though, you might break it).
 
-<aside>
-💡
 
-If the weapon you get from the Starter Pack has 22 weapon damage, CONGRATS! 
-It’s one of the best scaling weapons in the game.
+> 💡
+>
+> If the weapon you get from the Starter Pack has 22 weapon damage, CONGRATS! 
+> It’s one of the best scaling weapons in the game.
 
-</aside>
 
 Read more about weapons here: [All About Weapons]([https://guides.77-bit.wiki/all-about-weapons/](https://guides.77-bit.wiki/all-about-weapons/))
 
