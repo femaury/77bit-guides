@@ -202,7 +202,7 @@ export function GuideDetailPage() {
               {/* Subtle sidebar ad below ToC */}
               <AdSense
                 format="rectangle"
-                slot="2345678901"
+                slot="9702695239"
                 className="hidden lg:block shrink-0 mt-auto"
               />
             </div>
@@ -255,7 +255,7 @@ export function GuideDetailPage() {
               {/* Bottom ad - shown after content */}
               <AdSense
                 format="auto"
-                slot="3456789012"
+                slot="8812151947"
                 className="mt-10 pt-6 border-t border-border-primary"
               />
             </article>
