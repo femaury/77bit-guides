@@ -50,6 +50,18 @@
     "slug": "which-daily-quests-are-worth-doing",
     "contentPath": "/content/dailies.md",
     "lastUpdated": "2025-03-31",
-    "assetBasePath": "/content/dailies"
+    "assetBasePath": "/content/dailies",
+    "related": ["6"]
+  },
+  {
+    "id": "6",
+    "title": "Best Premium Purchases (Bits)",
+    "description": "Wondering how to best spend your Bits? Or where spending extra money will give you the best bang for your Bits? This guide will help you with exactly that.",
+    "image": "/images/premium-store.png",
+    "slug": "best-premium-purchases",
+    "contentPath": "/content/best-premium-purchases.md",
+    "lastUpdated": "2025-04-04",
+    "assetBasePath": "/content/best-premium-purchases",
+    "related": ["4", "5"]
   }
 ] 
