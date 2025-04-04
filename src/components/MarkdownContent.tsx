@@ -2,6 +2,7 @@ import ReactMarkdown from 'react-markdown';
 import { cn } from '../lib/utils';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
+import React from 'react';
 
 interface MarkdownContentProps {
   content: string;
@@ -204,16 +205,18 @@ export function MarkdownContent({ content, className, baseImagePath = '' }: Mark
             </strong>
           ),
           table: ({ children }) => (
-            <div className="overflow-x-auto my-6">
-              <div className="rounded-lg border border-[rgba(252,213,73,0.1)] overflow-hidden">
-                <table className="min-w-full border-collapse text-xs">
-                  {children}
-                </table>
+            <div className="my-6 overflow-hidden">
+              <div className="overflow-x-auto">
+                <div className="inline-block min-w-full rounded-lg border border-[rgba(252,213,73,0.1)]">
+                  <table className="min-w-full border-collapse text-xs table-auto">
+                    {children}
+                  </table>
+                </div>
               </div>
             </div>
           ),
           thead: ({ children }) => (
-            <thead className="bg-[rgba(252,213,73,0.1)]">
+            <thead className="[&>tr:first-child>th:first-child]:rounded-tl-md [&>tr:first-child>th:last-child]:rounded-tr-md">
               {children}
             </thead>
           ),
@@ -229,16 +232,41 @@ export function MarkdownContent({ content, className, baseImagePath = '' }: Mark
               </tr>
             );
           },
-          th: ({ children }) => (
-            <th className="text-primary px-2 py-1.5 text-left text-xs font-medium border-r border-b border-[rgba(252,213,73,0.1)] whitespace-nowrap tracking-tight last:border-r-0">
-              {children}
-            </th>
-          ),
-          td: ({ children }) => (
-            <td className="text-gray-200/90 px-2 py-1.5 text-right text-xs border-r border-b border-[rgba(252,213,73,0.1)] whitespace-nowrap tracking-tight last:border-r-0">
-              {children}
-            </td>
-          ),
+          th: ({ children, style }) => {
+            // ReactMarkdown passes alignment as style object with left as default
+            // We'll override the default to be right-aligned when no style is specified
+            const textAlign = style?.textAlign || 'right';
+            const alignmentClass = 
+              textAlign === 'center' ? 'text-center' : 
+              textAlign === 'left' ? 'text-left' : 'text-right';
+            
+            return (
+              <th className={cn(
+                "text-primary px-2 py-1.5 text-xs font-medium border-r border-b border-[rgba(252,213,73,0.1)] whitespace-nowrap tracking-tight last:border-r-0 bg-[rgba(252,213,73,0.1)]",
+                alignmentClass
+              )}>
+                {children}
+              </th>
+            );
+          },
+          td: ({ children, style }) => {
+            // ReactMarkdown passes alignment as style object with left as default
+            // We'll override the default to be right-aligned when no style is specified
+            const textAlign = style?.textAlign || 'right';
+            // Use conditional classes instead of template literals for Tailwind
+            const alignmentClass = 
+              textAlign === 'center' ? 'text-center' : 
+              textAlign === 'left' ? 'text-left' : 'text-right';
+            
+            return (
+              <td className={cn(
+                "text-gray-200/90 px-2 py-1.5 text-xs border-r border-b border-[rgba(252,213,73,0.1)] whitespace-nowrap tracking-tight last:border-r-0",
+                alignmentClass
+              )}>
+                {children}
+              </td>
+            );
+          },
           code: ({ children, className }) => {
             // Check if it's an inline code or a regular code block
             const isInline = !className;
