@@ -15,7 +15,6 @@ interface TableOfContentsProps {
 export function TableOfContents({ 
   articleRef, 
   className = '',
-  maxHeight = '80vh'  // Default max height of 80% of viewport height
 }: TableOfContentsProps) {
   const [headings, setHeadings] = useState<HeadingItem[]>([]);
   const [activeId, setActiveId] = useState<string>('');
@@ -73,11 +72,11 @@ export function TableOfContents({
   }
 
   return (
-    <div className={`${className}`}>
-      <h3 className="text-sm font-semibold uppercase text-yellow-500/90 mb-4">
+    <div className={`flex flex-col ${className}`}>
+      <h3 className="text-sm font-semibold uppercase text-yellow-500/90 mb-4 shrink-0">
         Table of Contents
       </h3>
-      <div className="overflow-y-auto" style={{ maxHeight }}>
+      <div className="overflow-y-auto grow">
         <ul className="space-y-2 text-sm">
           {headings.map((heading) => (
             <li 
