@@ -1,9 +1,23 @@
+import React from 'react';
 import { getAllGuides } from '../data/guides';
 import { GuideCard } from '../components/GuideCard';
 import { SEO } from '../components/SEO';
+import { AdSense } from '../components/ads/AdSense';
 
 export function HomePage() {
   const guides = getAllGuides();
+  
+  // Split guides into chunks for inserting ads
+  const chunkedGuides = guides.reduce((resultArray, guide, index) => {
+    const chunkIndex = Math.floor(index / 6); // Insert ad after every 6 guides
+    
+    if (!resultArray[chunkIndex]) {
+      resultArray[chunkIndex] = [];
+    }
+    
+    resultArray[chunkIndex].push(guide);
+    return resultArray;
+  }, [] as typeof guides[]);
 
   return (
     <>
@@ -22,8 +36,21 @@ export function HomePage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {guides.map(guide => (
-            <GuideCard key={guide.id} guide={guide} />
+          {chunkedGuides.map((chunk, chunkIndex) => (
+            <React.Fragment key={`chunk-${chunkIndex}`}>
+              {chunk.map(guide => (
+                <GuideCard key={guide.id} guide={guide} />
+              ))}
+              
+              {/* Display horizontal ad after each chunk except the last one */}
+              {chunkIndex < chunkedGuides.length - 1 && (
+                <AdSense
+                  format="horizontal"
+                  slot="1234567890"
+                  className="col-span-full mx-auto max-w-4xl my-8"
+                />
+              )}
+            </React.Fragment>
           ))}
         </div>
       </div>

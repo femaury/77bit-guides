@@ -7,6 +7,7 @@ import { SEO } from '../components/SEO';
 import { TableOfContents } from '../components/TableOfContents';
 // import { GuideFeedback } from '../components/GuideFeedback';
 import { calculateReadingTime } from '../lib/utils';
+import { AdSense } from '../components/ads/AdSense';
 
 export function GuideDetailPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -189,14 +190,21 @@ export function GuideDetailPage() {
         {/* Two column layout with ToC and content */}
         <div className="flex flex-col lg:flex-row gap-8 justify-between">
           {/* Table of Contents sidebar - hidden on mobile, shown as sticky on desktop */}
-          <aside className="hidden lg:block w-64 shrink-0 min-h-[1px]">
-            <div className="sticky top-6">
+          <aside className="hidden lg:block w-64 shrink-0 min-h-[1px] self-stretch">
+            <div className="h-full sticky top-6 flex flex-col max-h-[calc(100vh-3rem)] overflow-hidden min-h-0">
               {showTableOfContents && (
-                <TableOfContents 
-                  articleRef={articleRef as React.RefObject<HTMLElement>} 
-                  className="bg-bg-elevated/30 border border-border-primary rounded-lg p-4"
-                />
+                  <TableOfContents 
+                    articleRef={articleRef as React.RefObject<HTMLElement>} 
+                    className="grow overflow-hidden mb-4 bg-bg-elevated/30 border border-border-primary rounded-lg p-4"
+                  />
               )}
+              
+              {/* Subtle sidebar ad below ToC */}
+              <AdSense
+                format="rectangle"
+                slot="2345678901"
+                className="hidden lg:block shrink-0 mt-auto"
+              />
             </div>
           </aside>
           
@@ -217,69 +225,59 @@ export function GuideDetailPage() {
             </div>
             
             {/* Guide content section - set a min-height for the article container */}
-            <article ref={articleRef} className="guide-article bg-bg-elevated/30 border border-border-primary rounded-lg p-4 sm:p-6 md:p-8 min-h-[500px]">
+            <article 
+              ref={articleRef}
+              className="flex-1 min-w-0 bg-bg-elevated/30 rounded-lg p-6 border border-border-primary"
+            >
               {loading ? (
-                <div className="animate-pulse">
-                  <div className="h-6 bg-bg-elevated/50 rounded w-3/4 mb-4"></div>
-                  <div className="h-6 bg-bg-elevated/50 rounded w-1/2 mb-8"></div>
-                  <div className="h-4 bg-bg-elevated/50 rounded w-full mb-3"></div>
-                  <div className="h-4 bg-bg-elevated/50 rounded w-full mb-3"></div>
-                  <div className="h-4 bg-bg-elevated/50 rounded w-3/4 mb-6"></div>
-                  <div className="h-6 bg-bg-elevated/50 rounded w-1/3 mb-4"></div>
-                  <div className="h-4 bg-bg-elevated/50 rounded w-full mb-3"></div>
-                  <div className="h-4 bg-bg-elevated/50 rounded w-full mb-3"></div>
-                  <div className="h-4 bg-bg-elevated/50 rounded w-3/4 mb-3"></div>
-                  <div className="h-4 bg-bg-elevated/50 rounded w-full mb-6"></div>
-                  <div className="h-6 bg-bg-elevated/50 rounded w-1/2 mb-4"></div>
-                  <div className="h-4 bg-bg-elevated/50 rounded w-full mb-3"></div>
+                <div className="animate-pulse space-y-4">
+                  <div className="h-4 bg-gray-700 rounded w-3/4"></div>
+                  <div className="h-4 bg-gray-700 rounded w-1/2"></div>
+                  <div className="h-4 bg-gray-700 rounded w-5/6"></div>
+                  <div className="h-4 bg-gray-700 rounded w-2/3"></div>
                 </div>
               ) : error ? (
-                <div className="text-red-400 p-4 border border-red-900/50 bg-red-900/10 rounded-lg">
-                  {error}
+                <div className="text-red-400 p-4 border border-red-800 rounded-lg bg-red-900/20">
+                  <h3 className="font-bold mb-2">Error Loading Guide</h3>
+                  <p>{error}</p>
+                  <div className="mt-4">
+                    <Button onClick={() => window.location.reload()} variant="primary">
+                      Try Again
+                    </Button>
+                  </div>
                 </div>
               ) : (
                 <>
-                  <MarkdownContent 
-                    content={content} 
-                    baseImagePath={guide.assetBasePath}
-                  />
-                  {/* <GuideFeedback 
-                    guideTitle={guide.title}
-                    className="mt-12" 
-                  /> */}
+                  <MarkdownContent content={content} baseImagePath={`/guides/${slug}`} />
                 </>
               )}
+                                
+              {/* Bottom ad - shown after content */}
+              <AdSense
+                format="auto"
+                slot="3456789012"
+                className="mt-10 pt-6 border-t border-border-primary"
+              />
             </article>
-            
-            {/* Related guides section - always reserve space */}
-            <div className="mt-12 pt-8 border-t border-border-primary min-h-[100px]">
-              {!loading && !error && relatedGuides.length > 0 && (
-                <>
-                  <h3 className="text-lg font-semibold text-gray-300 mb-6">You might also like</h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+            {/* Related guides - shown at the bottom if there are any */}
+            {relatedGuides.length > 0 && (
+                <div className="mt-10">
+                  <h2 className="text-xl font-bold text-primary mb-4">Related Guides</h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {relatedGuides.map(relatedGuide => (
-                      <div 
+                      <Link 
                         key={relatedGuide.id}
-                        className="bg-bg-elevated/30 border border-border-primary rounded-lg p-4 hover:bg-bg-elevated/50 transition-colors"
+                        to={`/guides/${relatedGuide.slug}`}
+                        className="p-4 rounded-lg border border-border-primary bg-bg-primary hover:bg-bg-elevated transition-colors"
                       >
-                        <Link to={`/${relatedGuide.slug}`} className="block">
-                          <h4 className="font-medium text-primary-hover mb-2">{relatedGuide.title}</h4>
-                          <p className="text-sm text-gray-400">{relatedGuide.description}</p>
-                        </Link>
-                      </div>
+                        <h3 className="font-bold text-primary mb-2">{relatedGuide.title}</h3>
+                        <p className="text-sm text-gray-400 line-clamp-2">{relatedGuide.description}</p>
+                      </Link>
                     ))}
                   </div>
-                  
-                  <div className="flex justify-center mt-8">
-                    <Link to="/">
-                      <Button variant="primary">
-                        View All Guides
-                      </Button>
-                    </Link>
-                  </div>
-                </>
+                </div>
               )}
-            </div>
           </div>
         </div>
       </div>
