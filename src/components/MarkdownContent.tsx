@@ -2,7 +2,6 @@ import ReactMarkdown from 'react-markdown';
 import { cn } from '../lib/utils';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
-import React from 'react';
 
 interface MarkdownContentProps {
   content: string;
