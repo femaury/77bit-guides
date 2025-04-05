@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export function Footer() {
   return (
     <footer className="bg-black/40 border-t border-[#FCD549]/20">
@@ -33,14 +35,12 @@ export function Footer() {
               </a>
             </div>
           </div>
-          <a 
-            href="https://77-bit.wiki/support" 
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/support"
             className="text-[#FCD549] hover:text-[#fce179] transition-colors duration-300 font-redhat"
           >
             Support the Project
-          </a>
+          </Link>
         </div>
       </div>
     </footer>

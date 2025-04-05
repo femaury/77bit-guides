@@ -3,6 +3,7 @@ import { Layout } from './components/layout/Layout';
 import { HomePage } from './pages/HomePage';
 import { GuideDetailPage } from './pages/GuideDetailPage';
 import { NotFoundPage } from './pages/NotFoundPage';
+import SupportPage from './pages/SupportPage';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             path="/guides/:slug" 
             element={<GuideRedirect />} 
           />
+          <Route path="/support" element={<SupportPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Layout>
