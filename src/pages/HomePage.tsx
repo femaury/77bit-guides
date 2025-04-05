@@ -36,7 +36,7 @@ export function HomePage() {
 
   return (
     <>
-      <SEO title="77-Bit Guides" image='/images/77bit_wiki.png' url='/'/>
+      <SEO url='/' />
       
       <div>
       {/* Hero Section */}
@@ -104,11 +104,6 @@ export function HomePage() {
           <h1 id="guides" className="text-5xl font-bold text-primary drop-shadow-[0_2px_4px_rgba(252,213,73,0.2)] mb-4">
             Guides
           </h1>
-          {/* <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-            Community-created guides to help you navigate the world of 77-Bit.
-            <br />
-            Select a guide to start your journey.
-          </p> */}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

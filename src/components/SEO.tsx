@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 interface SEOProps {
-  title: string;
+  title?: string;
   description?: string;
   image?: string;
   url?: string;
@@ -17,10 +17,11 @@ export function SEO({
   article = false,
   canonical
 }: SEOProps) {
-  const siteTitle = '77-Bit Guides';
-  const defaultDescription = 'Community-created guides for the 77-Bit game. Learn useful tips, game data, mechanics, and more.';
+  const siteTitle = '77-Bit Wiki';
+  const pageTitle = title ? `${title} | ${siteTitle}` : siteTitle;
+  const defaultDescription = 'Your ultimate companion for game progression, exploration, and strategy. Access interactive maps, skill calculators, and comprehensive guides.';
   const defaultImage = '/images/77bit_wiki.png';
-  const siteUrl = 'https://guides.77-bit.wiki';
+  const siteUrl = 'https://77-bit.wiki';
   
   // Ensure image path starts with a slash if it's not an absolute URL
   const normalizedImage = image && !image.startsWith('http') && !image.startsWith('/') 
@@ -45,7 +46,7 @@ export function SEO({
       // Just set the window.__SEO_DATA__ variable for consistency
       // @ts-expect-error - This is for our build process
       window.__SEO_DATA__ = {
-        title: `${title} | ${siteTitle}`,
+        title: pageTitle,
         description: metaDescription,
         image: absoluteMetaImage,
         url: metaUrl,
@@ -56,7 +57,7 @@ export function SEO({
     }
     
     // Set title
-    document.title = `${title} | ${siteTitle}`;
+    document.title = pageTitle;
     
     // Helper to create or update a meta tag
     const setMetaTag = (name: string, content: string) => {
@@ -73,7 +74,7 @@ export function SEO({
     setMetaTag('description', metaDescription);
     
     // Set Open Graph metadata
-    setMetaTag('og:title', `${title} | ${siteTitle}`);
+    setMetaTag('og:title', pageTitle);
     setMetaTag('og:description', metaDescription);
     setMetaTag('og:image', absoluteMetaImage);
     setMetaTag('og:url', metaUrl);
@@ -81,7 +82,7 @@ export function SEO({
     
     // Set Twitter Card metadata
     setMetaTag('twitter:card', 'summary_large_image');
-    setMetaTag('twitter:title', `${title} | ${siteTitle}`);
+    setMetaTag('twitter:title', pageTitle);
     setMetaTag('twitter:description', metaDescription);
     setMetaTag('twitter:image', absoluteMetaImage);
     
@@ -127,7 +128,7 @@ export function SEO({
     // Store SEO data in a global variable for pre-rendering
     // @ts-expect-error - This is for our build process
     window.__SEO_DATA__ = {
-      title: `${title} | ${siteTitle}`,
+      title: pageTitle,
       description: metaDescription,
       image: absoluteMetaImage,
       url: metaUrl,
@@ -135,7 +136,7 @@ export function SEO({
       canonical: metaCanonical
     };
     
-  }, [title, metaDescription, absoluteMetaImage, metaUrl, metaCanonical, article, siteTitle]);
+  }, [title, metaDescription, absoluteMetaImage, metaUrl, metaCanonical, article, siteTitle, pageTitle]);
   
   // No need to return a Helmet component anymore
   return null;
