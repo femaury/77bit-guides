@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { getAllGuides } from '../data/guides';
 import { GuideCard } from '../components/GuideCard';
 import { SEO } from '../components/SEO';
@@ -6,6 +6,21 @@ import { AdSense } from '../components/ads/AdSense';
 
 export function HomePage() {
   const guides = getAllGuides();
+  
+  // Handle hash navigation when component mounts
+  useEffect(() => {
+    // If URL contains a hash, scroll to the corresponding element
+    if (window.location.hash) {
+      const id = window.location.hash.substring(1);
+      const element = document.getElementById(id);
+      if (element) {
+        // Add a small delay to ensure rendering is complete
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    }
+  }, []);
   
   // Split guides into chunks for inserting ads
   const chunkedGuides = guides.reduce((resultArray, guide, index) => {
@@ -86,7 +101,7 @@ export function HomePage() {
       </div>
 
         <div className="text-center my-12">
-          <h1 className="text-5xl font-bold text-primary drop-shadow-[0_2px_4px_rgba(252,213,73,0.2)] mb-4">
+          <h1 id="guides" className="text-5xl font-bold text-primary drop-shadow-[0_2px_4px_rgba(252,213,73,0.2)] mb-4">
             Guides
           </h1>
           {/* <p className="text-lg text-gray-300 max-w-2xl mx-auto">

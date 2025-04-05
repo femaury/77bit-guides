@@ -1,18 +1,48 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import React from 'react';
 
 export function Navbar() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  
+  const handleGuidesClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    
+    // If already on homepage, just scroll to guides
+    if (location.pathname === '/') {
+      const guidesElement = document.getElementById('guides');
+      if (guidesElement) {
+        guidesElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      // Navigate to homepage and add hash
+      navigate('/');
+      // Need to manually scroll after navigation
+      setTimeout(() => {
+        const guidesElement = document.getElementById('guides');
+        if (guidesElement) {
+          guidesElement.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  };
+  
   return (
     <nav className="bg-bg-secondary border-b border-border-primary py-4">
       <div className="container mx-auto px-4 flex items-center">
         <div className="flex items-center space-x-8">
-          <a href="https://77-bit.wiki" className="flex items-center" target="_blank" rel="noopener noreferrer">
+          <Link to="/" className="flex items-center">
             <img src="/images/77-bit_wiki.svg" alt="77-bit Wiki" className="h-8" />
-          </a>
+          </Link>
           
           <div className="flex space-x-6">
-            <Link to="/" className="text-text-primary hover:text-primary transition-colors">
+            <a 
+              href="/#guides" 
+              onClick={handleGuidesClick}
+              className="text-text-primary hover:text-primary transition-colors"
+            >
               Guides
-            </Link>
+            </a>
             <a href="https://map.77-bit.wiki" className="text-text-primary hover:text-primary transition-colors flex items-center gap-1" target="_blank" rel="noopener noreferrer">
               Maps
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
